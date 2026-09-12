@@ -1,9 +1,10 @@
 #include <iostream>
+#include <cstdlib> //para rand()
+#include <ctime>   //para time(), que usamos al generar la semilla
 
 //Incluye GLAD siempre ANTES que GLFW
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
 
 //Esta función callback será llamada cuando GLFW produzca algún error
 void error_callback(int errno, const char* desc) {
@@ -51,17 +52,42 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
     }
 }
 
-//Esta función callback será llamada cada vez que se mueva la rueda
-//del ratón sobre el área de dibujo OpenGL.
-void scroll_callback ( GLFWwindow *window, double xoffset, double yoffset ) {
-    std::cout << "Movida la rueda del ratón " << xoffset
-             << " Unidades en horizontal y " << yoffset
-             << " unidades en vertical" << std::endl;
+//-------------TRABAJO AUTÓNOMO-------------
+
+//Variables globales para guardar el color de fondo actual
+float bgRed = 0.6f;
+float bgGreen = 0.6f;
+float bgBlue = 0.6f;
+
+//Función auxiliar que genera el color de forma aleatoria
+float randomColorValue() {
+    return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
 }
+
+//Esta función callback será llamada cada vez que se mueva la rueda
+//del ratón sobre el área de dibujo OpenGL
+void scroll_callback (GLFWwindow* window, double xoffset, double yoffset) {
+    std::cout << "Movida la rueda del ratón " << xoffset
+              << " unidades en horizontal y " << yoffset
+              << " unidades en vertical" << std::endl;
+
+    if (yoffset != 0.0) {
+        bgRed   = randomColorValue();
+        bgGreen = randomColorValue();
+        bgBlue  = randomColorValue();
+
+        glClearColor(bgRed, bgGreen, bgBlue, 1.0f);
+    }
+}
+
+//------------------------------------------
 
 int main() {
     // TIP Press <shortcut actionId="RenameElement"/> when your caret is at the <b>lang</b> variable name to see how CLion can help you rename it.
     std::cout << "Starting Application PAG" << std::endl;
+
+    // Sembramos el generador de números aleatorios una única vez (TRABAJO AUTÓNOMO)
+    srand(static_cast<unsigned int>(time(nullptr)));
 
     //Este callback hay que registrarlo ANTES de llamar a glfwInit
     glfwSetErrorCallback ( (GLFWerrorfun) error_callback );
@@ -127,7 +153,7 @@ int main() {
 
     //Establecemos un gris medio como color con el que se borrará el frame buffer
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
-    glClearColor(0.6, 0.6, 0.6, 1.0);
+    glClearColor(bgRed, bgGreen, bgBlue, 1.0f);
 
     //Le decimos a OpenGL que tenga en cuenta la profundidad a la hora de dibujar
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
