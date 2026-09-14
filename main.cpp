@@ -131,7 +131,7 @@ int main() {
     //Ahora inicializamos GLAD
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
         std::cout << "GLAD inicialization failed" << std::endl;
-        glfwDestroyWindow(window); //LIberamos los recursos que ocupaba GLFW
+        glfwDestroyWindow(window); //Liberamos los recursos que ocupaba GLFW
         window = nullptr;
         glfwTerminate();
         return -3;
@@ -153,7 +153,7 @@ int main() {
 
     //Establecemos un gris medio como color con el que se borrará el frame buffer
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
-    glClearColor(bgRed, bgGreen, bgBlue, 1.0f);
+    glClearColor(bgRed, bgGreen, bgBlue, 1.0f); //Usamos las variables globales
 
     //Le decimos a OpenGL que tenga en cuenta la profundidad a la hora de dibujar
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
