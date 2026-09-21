@@ -6,6 +6,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "Renderer.h"
+
 //Esta función callback será llamada cuando GLFW produzca algún error
 void error_callback(int errno, const char* desc) {
     std::string aux(desc);
@@ -15,11 +17,7 @@ void error_callback(int errno, const char* desc) {
 //Esta función callback será llamada cada vez que el área de dibujo
 //OpenGL deba ser redibujada
 void window_refresh_callback(GLFWwindow* window) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
-    //intercambia el buffer back (que se ha estado dibujando) por el
-    //que se mostraba hasta ahora front. Debe ser la última orden de
-    //este callback
+    PAG::Renderer::getInstancia().refrescar();
 
     glfwSwapBuffers(window);
     std::cout << "Refresh callback called" << std::endl;
@@ -28,7 +26,7 @@ void window_refresh_callback(GLFWwindow* window) {
 //Esta función callback será llamada cada vez que se cambie el tamaño
 //del área de dibujo OpenGL.
 void framebuffer_size_callback ( GLFWwindow *window, int width, int height ){
-    glViewport ( 0, 0, width, height );
+    PAG::Renderer::getInstancia().redimensionar(width, height);
     std::cout << "Resize callback called" << std::endl;
 }
 
@@ -54,10 +52,6 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 //-------------TRABAJO AUTÓNOMO-------------
 
-//Variables globales para guardar el color de fondo actual
-float bgRed = 0.6f;
-float bgGreen = 0.6f;
-float bgBlue = 0.6f;
 
 //Función auxiliar que genera el color de forma aleatoria
 float randomColorValue() {
@@ -66,17 +60,17 @@ float randomColorValue() {
 
 //Esta función callback será llamada cada vez que se mueva la rueda
 //del ratón sobre el área de dibujo OpenGL
-void scroll_callback (GLFWwindow* window, double xoffset, double yoffset) {
+void scroll_callback ( GLFWwindow *window, double xoffset, double yoffset ) {
     std::cout << "Movida la rueda del ratón " << xoffset
-              << " unidades en horizontal y " << yoffset
-              << " unidades en vertical" << std::endl;
+             << " Unidades en horizontal y " << yoffset
+             << " unidades en vertical" << std::endl;
 
     if (yoffset != 0.0) {
-        bgRed   = randomColorValue();
-        bgGreen = randomColorValue();
-        bgBlue  = randomColorValue();
+        float r = randomColorValue();
+        float g = randomColorValue();
+        float b = randomColorValue();
 
-        glClearColor(bgRed, bgGreen, bgBlue, 1.0f);
+        PAG::Renderer::getInstancia().cambiarColorFondo(r, g, b);
     }
 }
 
@@ -139,10 +133,7 @@ int main() {
 
     //Interrogamos a OpenGL para que nos informe de las propiedades del contexto
     //3D construido
-    std::cout << glGetString (GL_RENDERER) << std::endl
-              << glGetString (GL_VENDOR) << std::endl
-              << glGetString (GL_VERSION) << std::endl
-              << glGetString (GL_SHADING_LANGUAGE_VERSION) << std::endl;
+    std::cout << PAG::Renderer::getInstancia().consultarOpenGL() << std::endl;
 
     //Registramos los callbacks que responderán a los eventos principales
     glfwSetWindowRefreshCallback ( window, window_refresh_callback );
@@ -153,26 +144,19 @@ int main() {
 
     //Establecemos un gris medio como color con el que se borrará el frame buffer
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
-    glClearColor(bgRed, bgGreen, bgBlue, 1.0f); //Usamos las variables globales
+    PAG::Renderer::getInstancia().cambiarColorFondo(0.6f, 0.6f, 0.6f);
 
     //Le decimos a OpenGL que tenga en cuenta la profundidad a la hora de dibujar
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
-    glEnable (GL_DEPTH_TEST);
+    PAG::Renderer::getInstancia().inicializarOpenGL();
 
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
     //botón de cerrar la ventana
     while (!glfwWindowShouldClose(window)) {
-        //Borra los buffers (color y profundidad)
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        PAG::Renderer::getInstancia().refrescar();
 
-        //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
-        //intercambia el buffer back (en el que se ha estado dibujando) por el
-        //que se mostraba hasta ahora (front)
         glfwSwapBuffers(window);
-        //Obtiene y organiza los eventos pendientes, tales como pulsaciones
-        //de teclas o de ratón, etc. Siempre al final de cada iteración del
-        //ciclo de eventos y después de glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
