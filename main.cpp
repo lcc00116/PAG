@@ -10,6 +10,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "GUI.h"
 #include "Renderer.h"
 
 //Esta función callback será llamada cuando GLFW produzca algún error
@@ -22,6 +23,7 @@ void error_callback(int errno, const char* desc) {
 //OpenGL deba ser redibujada
 void window_refresh_callback(GLFWwindow* window) {
     PAG::Renderer::getInstancia().refrescar();
+    PAG::GUI::getInstancia().refrescar();
 
     glfwSwapBuffers(window);
     std::cout << "Refresh callback called" << std::endl;
@@ -140,13 +142,7 @@ int main() {
     std::cout << PAG::Renderer::getInstancia().consultarOpenGL() << std::endl;
 
     //Inicializamos Dear ImGui
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init();
+    PAG::GUI::getInstancia().inicializar(window);
 
     //Registramos los callbacks que responderán a los eventos principales
     glfwSetWindowRefreshCallback ( window, window_refresh_callback );
@@ -168,6 +164,7 @@ int main() {
     //botón de cerrar la ventana
     while (!glfwWindowShouldClose(window)) {
         PAG::Renderer::getInstancia().refrescar();
+        PAG::GUI::getInstancia().refrescar();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -175,6 +172,8 @@ int main() {
 
     //Una vez terminado el ciclo de eventos, liberar recursos, etc
     std::cout << "Finishing application pag prueba" << std::endl;
+
+    PAG::GUI::getInstancia().liberar();
 
     glfwDestroyWindow(window); //Cerramos y destruimos la ventana de la aplicación
     window = nullptr;

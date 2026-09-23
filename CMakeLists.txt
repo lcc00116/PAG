@@ -14,7 +14,9 @@
                                     ${GLAD_FILES}
                                     ${IMGUI_FILES}
             Renderer.cpp
-            Renderer.h)
+            Renderer.h
+            GUI.cpp
+            GUI.h)
 
     #Indica directorios (adicionales a los por defeto) para buscar includes
     target_include_directories( ${PROJECT_NAME} PUBLIC GLAD/include
