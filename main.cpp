@@ -2,6 +2,10 @@
 #include <cstdlib> //para rand()
 #include <ctime>   //para time(), que usamos al generar la semilla
 
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 //Incluye GLAD siempre ANTES que GLFW
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -134,6 +138,15 @@ int main() {
     //Interrogamos a OpenGL para que nos informe de las propiedades del contexto
     //3D construido
     std::cout << PAG::Renderer::getInstancia().consultarOpenGL() << std::endl;
+
+    //Inicializamos Dear ImGui
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init();
 
     //Registramos los callbacks que responderán a los eventos principales
     glfwSetWindowRefreshCallback ( window, window_refresh_callback );
