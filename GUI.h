@@ -5,6 +5,9 @@
 #ifndef PAG_PRAC1_GUI_H
 #define PAG_PRAC1_GUI_H
 
+#include <string>
+#include <vector>
+
 struct GLFWwindow;
 
 namespace PAG {
@@ -12,8 +15,8 @@ namespace PAG {
     class GUI {
     private:
         static GUI* instancia;
-
         float _bgColor[3];
+        std::vector<std::string> _mensajes;
 
         GUI();
 
@@ -26,6 +29,7 @@ namespace PAG {
         void refrescar();
         void liberar();
         void notificarBotonRaton(int boton, bool pulsado);
+        void agregarMensaje(const std::string& mensaje);
     };
 
 }
