@@ -13,6 +13,8 @@ namespace PAG {
     private:
         static GUI* instancia;
 
+        float _bgColor[3];
+
         GUI();
 
     public:
@@ -23,6 +25,7 @@ namespace PAG {
         void inicializar(GLFWwindow* window);
         void refrescar();
         void liberar();
+        void notificarBotonRaton(int boton, bool pulsado);
     };
 
 }

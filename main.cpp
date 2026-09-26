@@ -50,9 +50,11 @@ void key_callback ( GLFWwindow *window, int key, int scancode, int action, int m
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods){
     if ( action == GLFW_PRESS ){
         std::cout << "Pulsado el botón: " << button << std::endl;
+        PAG::GUI::getInstancia().notificarBotonRaton(button, true);
     }
     else if ( action == GLFW_RELEASE ){
         std::cout << "Soltado el botón: " << button << std::endl;
+        PAG::GUI::getInstancia().notificarBotonRaton(button, false);
     }
 }
 

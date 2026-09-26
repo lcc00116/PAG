@@ -3,3 +3,4 @@ cmake-build-*/
 *.o
 *.exe
 imgui/
+imgui.ini
