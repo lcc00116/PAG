@@ -2,3 +2,5 @@ cmake-build-*/
 .idea/
 *.o
 *.exe
+imgui/
+imgui.ini

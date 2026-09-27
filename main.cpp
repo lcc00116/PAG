@@ -1,25 +1,31 @@
 #include <iostream>
 #include <cstdlib> //para rand()
 #include <ctime>   //para time(), que usamos al generar la semilla
+#include <sstream>
+#include <iomanip>
+
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 //Incluye GLAD siempre ANTES que GLFW
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "GUI.h"
+#include "Renderer.h"
+
 //Esta función callback será llamada cuando GLFW produzca algún error
 void error_callback(int errno, const char* desc) {
     std::string aux(desc);
-    std::cout << "Error de GLFW número " << errno << ": " << aux << std::endl;
+    PAG::GUI::getInstancia().agregarMensaje("Error de GLFW número " + std::to_string(errno) + ": " + aux);
 }
 
 //Esta función callback será llamada cada vez que el área de dibujo
 //OpenGL deba ser redibujada
 void window_refresh_callback(GLFWwindow* window) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
-    //intercambia el buffer back (que se ha estado dibujando) por el
-    //que se mostraba hasta ahora front. Debe ser la última orden de
-    //este callback
+    PAG::Renderer::getInstancia().refrescar();
+    PAG::GUI::getInstancia().refrescar();
 
     glfwSwapBuffers(window);
     std::cout << "Refresh callback called" << std::endl;
@@ -28,7 +34,7 @@ void window_refresh_callback(GLFWwindow* window) {
 //Esta función callback será llamada cada vez que se cambie el tamaño
 //del área de dibujo OpenGL.
 void framebuffer_size_callback ( GLFWwindow *window, int width, int height ){
-    glViewport ( 0, 0, width, height );
+    PAG::Renderer::getInstancia().redimensionar(width, height);
     std::cout << "Resize callback called" << std::endl;
 }
 
@@ -38,26 +44,27 @@ void key_callback ( GLFWwindow *window, int key, int scancode, int action, int m
     if ( key == GLFW_KEY_ESCAPE && action == GLFW_PRESS ){
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
-    std::cout << "Key callback called" << std::endl;
+
+    if ( action == GLFW_PRESS ) {
+        PAG::GUI::getInstancia().agregarMensaje("Tecla pulsada: " + std::to_string(key));
+    } else if ( action == GLFW_RELEASE ) {
+        PAG::GUI::getInstancia().agregarMensaje("Tecla soltada: " + std::to_string(key));
+    }
 }
 
 //Esta función callback será llamada cada vez que se pulse algún botón
 //del ratón sobre el área de dibujo OpenGL.
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods){
     if ( action == GLFW_PRESS ){
-        std::cout << "Pulsado el botón: " << button << std::endl;
+        PAG::GUI::getInstancia().agregarMensaje("Pulsado el botón: " + std::to_string(button));
+        PAG::GUI::getInstancia().notificarBotonRaton(button, true);
     }
     else if ( action == GLFW_RELEASE ){
-        std::cout << "Soltado el botón: " << button << std::endl;
+        PAG::GUI::getInstancia().agregarMensaje("Soltado el botón: " + std::to_string(button));
+        PAG::GUI::getInstancia().notificarBotonRaton(button, false);
     }
 }
 
-//-------------TRABAJO AUTÓNOMO-------------
-
-//Variables globales para guardar el color de fondo actual
-float bgRed = 0.6f;
-float bgGreen = 0.6f;
-float bgBlue = 0.6f;
 
 //Función auxiliar que genera el color de forma aleatoria
 float randomColorValue() {
@@ -66,25 +73,29 @@ float randomColorValue() {
 
 //Esta función callback será llamada cada vez que se mueva la rueda
 //del ratón sobre el área de dibujo OpenGL
-void scroll_callback (GLFWwindow* window, double xoffset, double yoffset) {
-    std::cout << "Movida la rueda del ratón " << xoffset
-              << " unidades en horizontal y " << yoffset
-              << " unidades en vertical" << std::endl;
+void scroll_callback ( GLFWwindow *window, double xoffset, double yoffset ) {
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(2);
+    oss << "Movida la rueda del ratón " << xoffset
+        << " unidades en horizontal y " << yoffset
+        << " unidades en vertical";
+
+    PAG::GUI::getInstancia().agregarMensaje(oss.str());
 
     if (yoffset != 0.0) {
-        bgRed   = randomColorValue();
-        bgGreen = randomColorValue();
-        bgBlue  = randomColorValue();
+        float r = randomColorValue();
+        float g = randomColorValue();
+        float b = randomColorValue();
 
-        glClearColor(bgRed, bgGreen, bgBlue, 1.0f);
+        PAG::Renderer::getInstancia().cambiarColorFondo(r, g, b);
     }
 }
 
-//------------------------------------------
+
 
 int main() {
-    // TIP Press <shortcut actionId="RenameElement"/> when your caret is at the <b>lang</b> variable name to see how CLion can help you rename it.
-    std::cout << "Starting Application PAG" << std::endl;
+    // Este mensaje se guarda como el primero en la ventana de "Mensajes"
+    PAG::GUI::getInstancia().agregarMensaje("Starting Application PAG");
 
     // Sembramos el generador de números aleatorios una única vez (TRABAJO AUTÓNOMO)
     srand(static_cast<unsigned int>(time(nullptr)));
@@ -94,7 +105,7 @@ int main() {
 
     //Inicializamos GLFW. Es un proceso que sólo debe realizarse una vez en la aplicación
     if (glfwInit() != GLFW_TRUE) {
-        std::cout << "Failed to initialize GLFW" << std::endl;
+        std::cout << "Failed to initialize GLFW" << std::endl; // No hay ventana aún, no se puede mostrar en ImGui
         return -1;
     }
 
@@ -119,7 +130,7 @@ int main() {
 
     //Comprobamos si la creación de la ventana ha ido bien
     if (window == nullptr) {
-        std::cout << "Failed to open GLFW window" << std::endl;
+        std::cout << "Failed to open GLFW window" << std::endl; // Aún sin ventana, tampoco puede ir a ImGui
         glfwTerminate(); //Liberamos los recursos que ocupaba GLFW
         return -2;
     }
@@ -130,7 +141,7 @@ int main() {
 
     //Ahora inicializamos GLAD
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        std::cout << "GLAD inicialization failed" << std::endl;
+        std::cout << "GLAD inicialization failed" << std::endl; // Falla antes de tener ImGui listo
         glfwDestroyWindow(window); //Liberamos los recursos que ocupaba GLFW
         window = nullptr;
         glfwTerminate();
@@ -138,11 +149,11 @@ int main() {
     }
 
     //Interrogamos a OpenGL para que nos informe de las propiedades del contexto
-    //3D construido
-    std::cout << glGetString (GL_RENDERER) << std::endl
-              << glGetString (GL_VENDOR) << std::endl
-              << glGetString (GL_VERSION) << std::endl
-              << glGetString (GL_SHADING_LANGUAGE_VERSION) << std::endl;
+    //3D construido. Ahora este mensaje va a la ventana de Mensajes, no a la consola
+    PAG::GUI::getInstancia().agregarMensaje(PAG::Renderer::getInstancia().consultarOpenGL());
+
+    //Inicializamos Dear ImGui
+    PAG::GUI::getInstancia().inicializar(window);
 
     //Registramos los callbacks que responderán a los eventos principales
     glfwSetWindowRefreshCallback ( window, window_refresh_callback );
@@ -153,36 +164,32 @@ int main() {
 
     //Establecemos un gris medio como color con el que se borrará el frame buffer
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
-    glClearColor(bgRed, bgGreen, bgBlue, 1.0f); //Usamos las variables globales
+    PAG::Renderer::getInstancia().cambiarColorFondo(0.6f, 0.6f, 0.6f);
 
     //Le decimos a OpenGL que tenga en cuenta la profundidad a la hora de dibujar
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
-    glEnable (GL_DEPTH_TEST);
+    PAG::Renderer::getInstancia().inicializarOpenGL();
 
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
     //botón de cerrar la ventana
     while (!glfwWindowShouldClose(window)) {
-        //Borra los buffers (color y profundidad)
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        PAG::Renderer::getInstancia().refrescar();
+        PAG::GUI::getInstancia().refrescar();
 
-        //GLFW usa un doble buffer para que no haya parpadeo. Esta orden
-        //intercambia el buffer back (en el que se ha estado dibujando) por el
-        //que se mostraba hasta ahora (front)
         glfwSwapBuffers(window);
-        //Obtiene y organiza los eventos pendientes, tales como pulsaciones
-        //de teclas o de ratón, etc. Siempre al final de cada iteración del
-        //ciclo de eventos y después de glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     //Una vez terminado el ciclo de eventos, liberar recursos, etc
+    //Este mensaje se queda en consola: la ventana ya no se va a redibujar, no se vería
     std::cout << "Finishing application pag prueba" << std::endl;
+
+    PAG::GUI::getInstancia().liberar();
 
     glfwDestroyWindow(window); //Cerramos y destruimos la ventana de la aplicación
     window = nullptr;
     glfwTerminate();
 
     return 0;
-    // TIP See CLion help at <a href="https://www.jetbrains.com/help/clion/">jetbrains.com/help/clion/</a>. Also, you can try interactive lessons for CLion by selecting 'Help | Learn IDE Features' from the main menu.
 }
