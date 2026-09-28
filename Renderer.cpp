@@ -28,6 +28,17 @@ namespace PAG {
     //Refresco de la escena
     void Renderer::refrescar() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // Rellena los triángulos (en vez de dibujar solo líneas o puntos)
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    // Activa el shader program y la geometría que se van a usar
+    glUseProgram(idSP);
+    glBindVertexArray(idVAO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
+
+    // Dibuja: triángulos, 3 índices, de tipo unsigned int, empezando en el primero
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
     }
 
     //Cambio del tamaño de la ventana
@@ -45,6 +56,7 @@ namespace PAG {
 
     void Renderer::inicializarOpenGL() {
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_MULTISAMPLE);// Activa el antialiasing pedido a GLFW con GLFW_SAMPLES
     }
 
     std::string Renderer::consultarOpenGL() {

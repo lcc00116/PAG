@@ -170,6 +170,10 @@ int main() {
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
     PAG::Renderer::getInstancia().inicializarOpenGL();
 
+    //Creamos el shader program y el modelo (una sola vez, antes del ciclo de eventos)
+    PAG::Renderer::getInstancia().creaShaderProgram();
+    PAG::Renderer::getInstancia().creaModelo();
+
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
     //botón de cerrar la ventana
