@@ -4,10 +4,6 @@
 #include <sstream>
 #include <iomanip>
 
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
 //Incluye GLAD siempre ANTES que GLFW
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -16,9 +12,9 @@
 #include "Renderer.h"
 
 //Esta función callback será llamada cuando GLFW produzca algún error
-void error_callback(int errno, const char* desc) {
+void error_callback(int codigo, const char* desc) {
     std::string aux(desc);
-    PAG::GUI::getInstancia().agregarMensaje("Error de GLFW número " + std::to_string(errno) + ": " + aux);
+    PAG::GUI::getInstancia().agregarMensaje("Error de GLFW número " + std::to_string(codigo) + ": " + aux);
 }
 
 //Esta función callback será llamada cada vez que el área de dibujo
@@ -28,14 +24,14 @@ void window_refresh_callback(GLFWwindow* window) {
     PAG::GUI::getInstancia().refrescar();
 
     glfwSwapBuffers(window);
-    std::cout << "Refresh callback called" << std::endl;
+    PAG::GUI::getInstancia().agregarMensaje("Refresh callback called");
 }
 
 //Esta función callback será llamada cada vez que se cambie el tamaño
 //del área de dibujo OpenGL.
 void framebuffer_size_callback ( GLFWwindow *window, int width, int height ){
     PAG::Renderer::getInstancia().redimensionar(width, height);
-    std::cout << "Resize callback called" << std::endl;
+    PAG::GUI::getInstancia().agregarMensaje("Resize callback called");
 }
 
 //Esta función callback será llamada cada vez que se pulse una tecla
@@ -101,7 +97,7 @@ int main() {
     srand(static_cast<unsigned int>(time(nullptr)));
 
     //Este callback hay que registrarlo ANTES de llamar a glfwInit
-    glfwSetErrorCallback ( (GLFWerrorfun) error_callback );
+    glfwSetErrorCallback(error_callback);
 
     //Inicializamos GLFW. Es un proceso que sólo debe realizarse una vez en la aplicación
     if (glfwInit() != GLFW_TRUE) {
