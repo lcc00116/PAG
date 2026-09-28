@@ -31,6 +31,7 @@ namespace PAG {
         void inicializarOpenGL();
         std::string consultarOpenGL();
         void creaShaderProgram();
+        void creaModelo();
 
     };
 } // PAG

@@ -95,4 +95,32 @@ namespace PAG {
         glLinkProgram(idSP);
     }
 
+    void Renderer::creaModelo() {
+        // Tres vértices (x, y, z) ya en coordenadas canónicas (entre -1 y 1)
+        GLfloat vertices[] = { -0.5f, -0.5f, 0.0f,
+                                0.5f, -0.5f, 0.0f,
+                                0.0f,  0.5f, 0.0f };
+        // Un triángulo formado por los vértices 0, 1 y 2
+        GLuint indices[] = { 0, 1, 2 };
+
+        // VAO: se crea y se activa. Todo lo que sigue queda registrado en él
+        glGenVertexArrays(1, &idVAO);
+        glBindVertexArray(idVAO);
+
+        // VBO: se crea, se activa y se copian los vértices a la GPU
+        glGenBuffers(1, &idVBO);
+        glBindBuffer(GL_ARRAY_BUFFER, idVBO);
+        glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
+
+        // Cómo leer el VBO: atributo 0, 3 valores float por vértice, sin normalizar,
+        // saltando 3 floats entre un vértice y el siguiente, empezando en el byte 0
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+        glEnableVertexAttribArray(0);
+
+        // IBO: se crea, se activa y se copian los índices a la GPU
+        glGenBuffers(1, &idIBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), indices, GL_STATIC_DRAW);
+    }
+
 } // PAG
