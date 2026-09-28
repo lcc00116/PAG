@@ -25,6 +25,7 @@ namespace PAG {
     public:
         virtual ~Renderer();
         static Renderer& getInstancia();
+        static void destruyeInstancia();
         void refrescar();
         void redimensionar(int width, int height);
         void cambiarColorFondo(float r, float g, float b);

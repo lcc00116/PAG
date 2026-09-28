@@ -190,6 +190,7 @@ int main() {
     std::cout << "Finishing application pag prueba" << std::endl;
 
     PAG::GUI::getInstancia().liberar();
+    PAG::Renderer::destruyeInstancia();
 
     glfwDestroyWindow(window); //Cerramos y destruimos la ventana de la aplicación
     window = nullptr;

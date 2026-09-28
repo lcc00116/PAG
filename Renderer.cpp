@@ -15,6 +15,25 @@ namespace PAG {
 
     //Destructor
     Renderer::~Renderer() {
+        // Solo se libera lo que realmente se creó (identificador distinto de 0)
+        if (idVS != 0) {
+            glDeleteShader(idVS);
+        }
+        if (idFS != 0) {
+            glDeleteShader(idFS);
+        }
+        if (idSP != 0) {
+            glDeleteProgram(idSP);
+        }
+        if (idVBO != 0) {
+            glDeleteBuffers(1, &idVBO);
+        }
+        if (idIBO != 0) {
+            glDeleteBuffers(1, &idIBO);
+        }
+        if (idVAO != 0) {
+            glDeleteVertexArrays(1, &idVAO);
+        }
     }
 
     //Consulta el objeto único de la clase y devuelve su dirección de memoria
@@ -23,6 +42,11 @@ namespace PAG {
             instancia = new Renderer;
         }
         return *instancia;
+    }
+
+    void Renderer::destruyeInstancia() {
+        delete instancia;      // Esto ejecuta el destructor
+        instancia = nullptr;
     }
 
     //Refresco de la escena
