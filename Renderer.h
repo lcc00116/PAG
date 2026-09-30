@@ -20,6 +20,7 @@ namespace PAG {
         GLuint idVAO = 0;  // Identificador del vertex array object
         GLuint idVBO = 0;  // Identificador del vertex buffer object
         GLuint idIBO = 0;  // Identificador del index buffer object
+        GLuint idVBOColores = 0;  // Identificador del VBO de colores (versión no entrelazada)
 
         Renderer();
         static void compilarShader(GLuint id, const std::string& etapa);

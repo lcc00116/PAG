@@ -39,6 +39,9 @@ namespace PAG {
         if (idVAO != 0) {
             glDeleteVertexArrays(1, &idVAO);
         }
+        if (idVBOColores != 0) {
+            glDeleteBuffers(1, &idVBOColores);
+        }
     }
 
     //Consulta el objeto único de la clase y devuelve su dirección de memoria
@@ -176,11 +179,16 @@ namespace PAG {
         // Un triángulo formado por los vértices 0, 1 y 2
         GLuint indices[] = { 0, 1, 2 };
 
+        // Color de cada vértice (mismo orden que en 'vertices')
+        GLfloat colores[] = { 1.0f, 0.0f, 0.0f,   // rojo
+                               0.0f, 1.0f, 0.0f,   // verde
+                               0.0f, 0.0f, 1.0f }; // azul
+
         // VAO: se crea y se activa. Todo lo que sigue queda registrado en él
         glGenVertexArrays(1, &idVAO);
         glBindVertexArray(idVAO);
 
-        // VBO: se crea, se activa y se copian los vértices a la GPU
+        // VBO de posiciones: se crea, se activa y se copian los vértices a la GPU
         glGenBuffers(1, &idVBO);
         glBindBuffer(GL_ARRAY_BUFFER, idVBO);
         glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
@@ -189,6 +197,30 @@ namespace PAG {
         // saltando 3 floats entre un vértice y el siguiente, empezando en el byte 0
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
         glEnableVertexAttribArray(0);
+
+        // ---------- VERSIÓN NO ENTRELAZADA: un VBO aparte para los colores ----------
+        glGenBuffers(1, &idVBOColores);
+        glBindBuffer(GL_ARRAY_BUFFER, idVBOColores);
+        glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), colores, GL_STATIC_DRAW);
+
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+        glEnableVertexAttribArray(1);
+
+        // ---------- VERSIÓN ENTRELAZADA (alternativa, comentada) ----------
+        // GLfloat datos[] = { -0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
+        //                      0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
+        //                      0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f };
+        //
+        // glGenBuffers(1, &idVBO);
+        // glBindBuffer(GL_ARRAY_BUFFER, idVBO);
+        // glBufferData(GL_ARRAY_BUFFER, sizeof(datos), datos, GL_STATIC_DRAW);
+        //
+        // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), nullptr);
+        // glEnableVertexAttribArray(0);
+        //
+        // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat),
+        //                        reinterpret_cast<void*>(3 * sizeof(GLfloat)));
+        // glEnableVertexAttribArray(1);
 
         // IBO: se crea, se activa y se copian los índices a la GPU
         glGenBuffers(1, &idIBO);
