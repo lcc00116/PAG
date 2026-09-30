@@ -24,6 +24,7 @@ namespace PAG {
         Renderer();
         static void compilarShader(GLuint id, const std::string& etapa);
         static void enlazarPrograma(GLuint id);
+        static std::string leeArchivo(const std::string& ruta);
     public:
         virtual ~Renderer();
         static Renderer& getInstancia();
@@ -33,7 +34,7 @@ namespace PAG {
         void cambiarColorFondo(float r, float g, float b);
         void inicializarOpenGL();
         std::string consultarOpenGL();
-        void creaShaderProgram();
+        void creaShaderProgram(const std::string& nombreBase);
         void creaModelo();
 
     };

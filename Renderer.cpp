@@ -8,6 +8,8 @@
 
 #include <stdexcept>
 #include <vector>
+#include <fstream>
+#include <sstream>
 
 namespace PAG {
     Renderer* Renderer::instancia = nullptr;
@@ -131,21 +133,21 @@ namespace PAG {
         }
     }
 
-    void Renderer::creaShaderProgram() {
-        // Código fuente de los shaders (de momento, como texto dentro del método)
-        std::string miVertexShader =
-            "#version 410\n"
-            "layout (location = 0) in vec3 posicion;\n"
-            "void main ()\n"
-            "{ gl_Position = vec4 ( posicion, 1 );\n"
-            "}\n";
+    std::string Renderer::leeArchivo(const std::string& ruta) {
+        std::ifstream archivo(ruta);
+        if (!archivo.is_open()) {
+            throw std::runtime_error("No se pudo abrir el archivo: " + ruta);
+        }
 
-        std::string miFragmentShader =
-            "#version 410\n"
-            "out vec4 colorFragmento;\n"
-            "void main ()\n"
-            "{ colorFragmento = vec4 ( 1.0, .4, .2, 1.0 );\n"
-            "}\n";
+        std::ostringstream contenido;
+        contenido << archivo.rdbuf();
+
+        return contenido.str();
+    }
+
+    void Renderer::creaShaderProgram(const std::string& nombreBase) {
+        std::string miVertexShader = leeArchivo(nombreBase + "-vs.glsl");
+        std::string miFragmentShader = leeArchivo(nombreBase + "-fs.glsl");
 
         // Vertex shader: se crea, se le pasa el código y se compila
         idVS = glCreateShader(GL_VERTEX_SHADER);
