@@ -3,6 +3,7 @@
 #include <ctime>   //para time(), que usamos al generar la semilla
 #include <sstream>
 #include <iomanip>
+#include <stdexcept>
 
 //Incluye GLAD siempre ANTES que GLFW
 #include <glad/glad.h>
@@ -167,8 +168,12 @@ int main() {
     PAG::Renderer::getInstancia().inicializarOpenGL();
 
     //Creamos el shader program y el modelo (una sola vez, antes del ciclo de eventos)
-    PAG::Renderer::getInstancia().creaShaderProgram();
-    PAG::Renderer::getInstancia().creaModelo();
+    try {
+        PAG::Renderer::getInstancia().creaShaderProgram();
+        PAG::Renderer::getInstancia().creaModelo();
+    } catch (const std::exception& e) {
+        PAG::GUI::getInstancia().agregarMensaje(e.what());
+    }
 
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el

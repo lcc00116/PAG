@@ -6,6 +6,9 @@
 
 #include "glad/glad.h"
 
+#include <stdexcept>
+#include <vector>
+
 namespace PAG {
     Renderer* Renderer::instancia = nullptr;
 
@@ -53,16 +56,20 @@ namespace PAG {
     void Renderer::refrescar() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        if (idSP == 0 || idVAO == 0) {
+            return;
+        }
+
         // Rellena los triángulos (en vez de dibujar solo líneas o puntos)
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    // Activa el shader program y la geometría que se van a usar
-    glUseProgram(idSP);
-    glBindVertexArray(idVAO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
+        // Activa el shader program y la geometría que se van a usar
+        glUseProgram(idSP);
+        glBindVertexArray(idVAO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
 
-    // Dibuja: triángulos, 3 índices, de tipo unsigned int, empezando en el primero
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+        // Dibuja: triángulos, 3 índices, de tipo unsigned int, empezando en el primero
+        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
     }
 
     //Cambio del tamaño de la ventana
@@ -96,6 +103,34 @@ namespace PAG {
         return info;
     }
 
+    void Renderer::compilarShader(GLuint id, const std::string& etapa) {
+        glCompileShader(id);
+
+        GLint ok = GL_FALSE;
+        glGetShaderiv(id, GL_COMPILE_STATUS, &ok);
+        if (ok == GL_FALSE) {
+            GLint longitud = 0;
+            glGetShaderiv(id, GL_INFO_LOG_LENGTH, &longitud);
+            std::vector<GLchar> log(longitud > 0 ? longitud : 1);
+            glGetShaderInfoLog(id, static_cast<GLsizei>(log.size()), nullptr, log.data());
+            throw std::runtime_error("Error compilando el " + etapa + ":\n" + log.data());
+        }
+    }
+
+    void Renderer::enlazarPrograma(GLuint id) {
+        glLinkProgram(id);
+
+        GLint ok = GL_FALSE;
+        glGetProgramiv(id, GL_LINK_STATUS, &ok);
+        if (ok == GL_FALSE) {
+            GLint longitud = 0;
+            glGetProgramiv(id, GL_INFO_LOG_LENGTH, &longitud);
+            std::vector<GLchar> log(longitud > 0 ? longitud : 1);
+            glGetProgramInfoLog(id, static_cast<GLsizei>(log.size()), nullptr, log.data());
+            throw std::runtime_error("Error enlazando el shader program:\n" + std::string(log.data()));
+        }
+    }
+
     void Renderer::creaShaderProgram() {
         // Código fuente de los shaders (de momento, como texto dentro del método)
         std::string miVertexShader =
@@ -116,19 +151,19 @@ namespace PAG {
         idVS = glCreateShader(GL_VERTEX_SHADER);
         const GLchar* fuenteVS = miVertexShader.c_str();
         glShaderSource(idVS, 1, &fuenteVS, nullptr);
-        glCompileShader(idVS);
+        compilarShader(idVS, "vertex shader");
 
         // Fragment shader: mismos tres pasos
         idFS = glCreateShader(GL_FRAGMENT_SHADER);
         const GLchar* fuenteFS = miFragmentShader.c_str();
         glShaderSource(idFS, 1, &fuenteFS, nullptr);
-        glCompileShader(idFS);
+        compilarShader(idFS, "fragment shader");
 
         // Shader program: se crea, se le añaden los dos shaders y se enlaza
         idSP = glCreateProgram();
         glAttachShader(idSP, idVS);
         glAttachShader(idSP, idFS);
-        glLinkProgram(idSP);
+        enlazarPrograma(idSP);
     }
 
     void Renderer::creaModelo() {

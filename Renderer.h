@@ -22,6 +22,8 @@ namespace PAG {
         GLuint idIBO = 0;  // Identificador del index buffer object
 
         Renderer();
+        static void compilarShader(GLuint id, const std::string& etapa);
+        static void enlazarPrograma(GLuint id);
     public:
         virtual ~Renderer();
         static Renderer& getInstancia();
