@@ -3,10 +3,7 @@
 #include <ctime>   //para time(), que usamos al generar la semilla
 #include <sstream>
 #include <iomanip>
-
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
+#include <stdexcept>
 
 //Incluye GLAD siempre ANTES que GLFW
 #include <glad/glad.h>
@@ -16,9 +13,9 @@
 #include "Renderer.h"
 
 //Esta función callback será llamada cuando GLFW produzca algún error
-void error_callback(int errno, const char* desc) {
+void error_callback(int codigo, const char* desc) {
     std::string aux(desc);
-    PAG::GUI::getInstancia().agregarMensaje("Error de GLFW número " + std::to_string(errno) + ": " + aux);
+    PAG::GUI::getInstancia().agregarMensaje("Error de GLFW número " + std::to_string(codigo) + ": " + aux);
 }
 
 //Esta función callback será llamada cada vez que el área de dibujo
@@ -28,14 +25,14 @@ void window_refresh_callback(GLFWwindow* window) {
     PAG::GUI::getInstancia().refrescar();
 
     glfwSwapBuffers(window);
-    std::cout << "Refresh callback called" << std::endl;
+    PAG::GUI::getInstancia().agregarMensaje("Refresh callback called");
 }
 
 //Esta función callback será llamada cada vez que se cambie el tamaño
 //del área de dibujo OpenGL.
 void framebuffer_size_callback ( GLFWwindow *window, int width, int height ){
     PAG::Renderer::getInstancia().redimensionar(width, height);
-    std::cout << "Resize callback called" << std::endl;
+    PAG::GUI::getInstancia().agregarMensaje("Resize callback called");
 }
 
 //Esta función callback será llamada cada vez que se pulse una tecla
@@ -101,7 +98,7 @@ int main() {
     srand(static_cast<unsigned int>(time(nullptr)));
 
     //Este callback hay que registrarlo ANTES de llamar a glfwInit
-    glfwSetErrorCallback ( (GLFWerrorfun) error_callback );
+    glfwSetErrorCallback(error_callback);
 
     //Inicializamos GLFW. Es un proceso que sólo debe realizarse una vez en la aplicación
     if (glfwInit() != GLFW_TRUE) {
@@ -170,6 +167,14 @@ int main() {
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
     PAG::Renderer::getInstancia().inicializarOpenGL();
 
+    //Creamos el shader program y el modelo (una sola vez, antes del ciclo de eventos)
+    try {
+        PAG::Renderer::getInstancia().creaShaderProgram("pag03");
+        PAG::Renderer::getInstancia().creaModelo();
+    } catch (const std::exception& e) {
+        PAG::GUI::getInstancia().agregarMensaje(e.what());
+    }
+
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
     //botón de cerrar la ventana
@@ -186,6 +191,7 @@ int main() {
     std::cout << "Finishing application pag prueba" << std::endl;
 
     PAG::GUI::getInstancia().liberar();
+    PAG::Renderer::destruyeInstancia();
 
     glfwDestroyWindow(window); //Cerramos y destruimos la ventana de la aplicación
     window = nullptr;

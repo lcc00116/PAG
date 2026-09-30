@@ -52,3 +52,15 @@ biblioteca de la otra por dentro.
 Dear ImGui no se incluye en el repositorio (ver `.gitignore`); es
 necesario descargarlo desde https://github.com/ocornut/imgui.
 
+
+# Práctica 3 - Lucía Cano Cubillo
+
+## ¿Por qué se deforma el triángulo al redimensionar la ventana?
+
+El triángulo lo dibujamos con unas coordenadas fijas, entre -1 y 1, y el shader no hace nada más que colocarlas tal cual están, sin ningún cálculo extra.
+
+El problema es que, para pintar esas coordenadas en la ventana, OpenGL las estira hasta ocupar todo el área de dibujo, es decir, todo el ancho y todo el alto que tenga la ventana en ese momento (esto lo hacemos con `glViewport`, que llamamos cada vez que la ventana cambia de tamaño).
+
+Si la ventana no es cuadrada, esa transformación escala el eje X y el eje Y en proporciones distintas, así que el triángulo se ensancha o se estrecha según la relación de aspecto de la ventana en cada momento. Por eso el triángulo se ve estirado o aplastado según la forma que tenga la ventana en cada momento.
+
+
