@@ -55,6 +55,20 @@ necesario descargarlo desde https://github.com/ocornut/imgui.
 
 # Práctica 3 - Lucía Cano Cubillo
 
+## Explicación de los cambios
+
+Partiendo de la práctica 2, en esta sesión se ha añadido el renderizado de un triángulo:
+
+- **Geometría y shaders en `PAG::Renderer`**: se han añadido los atributos para los identificadores de VAO, VBO, IBO y shaders, junto con los métodos `creaShaderProgram()` y `creaModelo()` para crearlos.
+
+- **Comprobación de errores con excepciones**: tanto la compilación de cada shader (`compilarShader`) como el enlazado del shader program (`enlazarPrograma`) comprueban su resultado y, si falla, lanzan una `std::runtime_error` con el log que devuelve OpenGL. Estas excepciones se capturan en `main.cpp` y el mensaje de error se muestra en la ventana de Mensajes de la interfaz, en vez de cerrar la aplicación.
+
+- **Shaders en archivos externos**: el código GLSL ya no está embebido como texto en `Renderer.cpp`, sino en los archivos `pag03-vs.glsl` y `pag03-fs.glsl`, que se leen con el método `leeArchivo()`. El CMakeLists.txt copia estos archivos al directorio de ejecución.
+
+- **Color por vértice**: se ha añadido un segundo atributo (color) a la geometría, interpolado entre los tres vértices del triángulo (rojo, verde y azul). Se ha implementado con un único VBO entrelazado (posición y color en el mismo array); la versión alternativa con dos VBOs separados se ha dejado comentada en el código, en `creaModelo()`.
+
+- **Limpieza de `main.cpp`**: los callbacks de refresco y redimensionado ya no escriben en consola, sino que envían sus mensajes a la ventana de Mensajes de la GUI, y se ha corregido el nombre del parámetro `errno` del callback de errores por conflicto con la macro del mismo nombre.
+
 ## ¿Por qué se deforma el triángulo al redimensionar la ventana?
 
 El triángulo lo dibujamos con unas coordenadas fijas, entre -1 y 1, y el shader no hace nada más que colocarlas tal cual están, sin ningún cálculo extra.
