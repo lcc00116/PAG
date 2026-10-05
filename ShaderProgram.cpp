@@ -19,6 +19,21 @@ ShaderProgram::~ShaderProgram() {
     }
 }
 
+ShaderProgram::ShaderProgram(ShaderProgram&& otro) noexcept
+    : idVS(std::exchange(otro.idVS, 0)),
+      idFS(std::exchange(otro.idFS, 0)),
+      idSP(std::exchange(otro.idSP, 0)) {}
+
+
+ShaderProgram& ShaderProgram::operator=(ShaderProgram&& otro) noexcept {
+    if (this != &otro) {
+        std::swap(idVS, otro.idVS);
+        std::swap(idFS, otro.idFS);
+        std::swap(idSP, otro.idSP);
+    }
+    return *this;
+}
+
 void ShaderProgram::compilarShader(GLuint id, const std::string& etapa) {
     glCompileShader(id);
 

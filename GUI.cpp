@@ -9,6 +9,8 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <imgui_stdlib.h>
+#include <exception>
 
 namespace PAG {
 
@@ -77,6 +79,25 @@ namespace PAG {
             //Si el usuario ya estaba viendo el final, seguimos bajando con cada mensaje nuevo
             if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY()) {
                 ImGui::SetScrollHereY(1.0f);
+            }
+        }
+        ImGui::End();
+
+        //---------- Ventana "Shader Program": nombre base de los shaders ----------
+
+        ImGui::SetNextWindowPos(ImVec2(10, 400), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(280, 120), ImGuiCond_Once);
+
+        if (ImGui::Begin("Shader Program")) {
+            ImGui::InputText("##", &_nombreShader, ImGuiInputTextFlags_AutoSelectAll);
+
+            if (ImGui::Button("Load")) {
+                try {
+                    Renderer::getInstancia().creaShaderProgram(_nombreShader);
+                    agregarMensaje("Shader program '" + _nombreShader + "' cargado correctamente");
+                } catch (const std::exception& e) {
+                    agregarMensaje(e.what());
+                }
             }
         }
         ImGui::End();

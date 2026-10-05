@@ -17,6 +17,7 @@ namespace PAG {
         static GUI* instancia;
         float _bgColor[3];
         std::vector<std::string> _mensajes;
+        std::string _nombreShader = "pag03";
 
         GUI();
 

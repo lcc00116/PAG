@@ -3,6 +3,7 @@
 
 #include <string>
 #include <glad/glad.h>
+#include <utility>
 
 namespace PAG {
 
@@ -19,6 +20,12 @@ namespace PAG {
     public:
         ShaderProgram() = default;
         ~ShaderProgram();
+        ShaderProgram(const ShaderProgram&) = delete;
+        ShaderProgram& operator=(const ShaderProgram&) = delete;
+        ShaderProgram(ShaderProgram&& otro) noexcept;
+        ShaderProgram& operator=(ShaderProgram&& otro) noexcept;
+
+        GLuint getId() const { return idSP; }
 
         void crear(const std::string& nombreBase);
         void usar() const;
