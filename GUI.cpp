@@ -122,4 +122,12 @@ namespace PAG {
         _mensajes.push_back(mensaje);
     }
 
+    bool GUI::capturaTeclado() const {
+        return ImGui::GetIO().WantCaptureKeyboard;
+    }
+
+    bool GUI::capturaRaton() const {
+        return ImGui::GetIO().WantCaptureMouse;
+    }
+
 }

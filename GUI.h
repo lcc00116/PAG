@@ -31,6 +31,8 @@ namespace PAG {
         void liberar();
         void notificarBotonRaton(int boton, bool pulsado);
         void agregarMensaje(const std::string& mensaje);
+        bool capturaTeclado() const;
+        bool capturaRaton() const;
     };
 
 }
