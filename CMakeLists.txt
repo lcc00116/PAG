@@ -16,7 +16,9 @@ add_executable( ${PROJECT_NAME} ${MY_FILES}
         Renderer.cpp
         Renderer.h
         GUI.cpp
-        GUI.h)
+        GUI.h
+        ShaderProgram.cpp
+        ShaderProgram.h)
 
 #Copia los shaders al directorio donde se ejecuta el programa
 configure_file(${CMAKE_SOURCE_DIR}/pag03-vs.glsl ${CMAKE_BINARY_DIR}/pag03-vs.glsl COPYONLY)
