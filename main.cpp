@@ -8,7 +8,6 @@
 //Incluye GLAD siempre ANTES que GLFW
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <imgui.h>
 
 #include "GUI.h"
 #include "Renderer.h"
@@ -79,7 +78,7 @@ void scroll_callback ( GLFWwindow *window, double xoffset, double yoffset ) {
     if ( PAG::GUI::getInstancia().capturaRaton() ) {
         return;
     }
-    
+
     std::ostringstream oss;
     oss << std::fixed << std::setprecision(2);
     oss << "Movida la rueda del ratón " << xoffset
@@ -179,9 +178,6 @@ int main() {
     //Creamos el modelo (una sola vez, antes del ciclo de eventos).
     //El shader program lo carga el usuario desde la ventana "Shader Program"
     PAG::Renderer::getInstancia().creaModelo();
-
-    try { PAG::Renderer::getInstancia().creaShaderProgram("noexiste"); }
-    catch (const std::exception& e) { PAG::GUI::getInstancia().agregarMensaje(e.what()); }
 
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el

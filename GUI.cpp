@@ -89,6 +89,7 @@ namespace PAG {
         ImGui::SetNextWindowSize(ImVec2(280, 120), ImGuiCond_Once);
 
         if (ImGui::Begin("Shader Program")) {
+            ImGui::SetWindowFontScale(1.5f);
             ImGui::InputText("##", &_nombreShader, ImGuiInputTextFlags_AutoSelectAll);
 
             if (ImGui::Button("Load")) {
