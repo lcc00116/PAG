@@ -78,3 +78,36 @@ El problema es que, para pintar esas coordenadas en la ventana, OpenGL las estir
 Si la ventana no es cuadrada, esa transformación escala el eje X y el eje Y en proporciones distintas, así que el triángulo se ensancha o se estrecha según la relación de aspecto de la ventana en cada momento. Por eso el triángulo se ve estirado o aplastado según la forma que tenga la ventana en cada momento.
 
 
+# Práctica 4 - Lucía Cano Cubillo
+
+En esta práctica se ha sacado la gestión de los shaders de `PAG::Renderer`
+y se ha añadido a la interfaz un control para cargarlos.
+
+![Diagrama de clases](img/pag04.svg)
+
+## Cambios realizados
+
+- **Nueva clase `PAG::ShaderProgram`:** se encarga de leer, compilar y
+  enlazar los shaders, y de liberarlos al terminar. Antes todo esto
+  estaba dentro de `Renderer`.
+- **`PAG::Renderer`:** ahora tiene un `ShaderProgram` y le delega todo lo
+  relacionado con los shaders.
+- **`PAG::GUI`:** nueva ventana "Shader Program" con una caja de texto
+  para el nombre base de los shaders (por ejemplo `pag03`) y un botón
+  "Load". Si la carga falla, el error aparece en la ventana de mensajes.
+- **`main.cpp`:** ya no carga ningún shader ni contiene nombres de
+  archivo. El usuario los carga desde la interfaz.
+- **Teclado y ratón:** si Dear ImGui está usando un evento (por ejemplo,
+  al escribir en la caja de texto), nuestros callbacks lo ignoran.
+
+## Decisiones de diseño
+
+- **`ShaderProgram` no es un Singleton:** en futuras prácticas puede
+  hacer falta más de un shader program, y un Singleton lo impediría.
+- **Si la carga falla, no se pierde el shader anterior:** el nuevo
+  shader program solo sustituye al actual si se ha creado sin errores,
+  así que el triángulo sigue visible.
+- **Cada clase tiene una única responsabilidad:** `Renderer` dibuja,
+  `ShaderProgram` gestiona los shaders y `GUI` se ocupa de la
+  interfaz. `GUI` solo usa `Renderer` para avisarle del color de fondo
+  y de la carga de shaders.
