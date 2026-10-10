@@ -38,6 +38,10 @@ void framebuffer_size_callback ( GLFWwindow *window, int width, int height ){
 //Esta función callback será llamada cada vez que se pulse una tecla
 //dirigida al área de dibujo OpenGL.
 void key_callback ( GLFWwindow *window, int key, int scancode, int action, int mods ){
+    if ( PAG::GUI::getInstancia().capturaTeclado() ) {
+        return;
+    }
+
     if ( key == GLFW_KEY_ESCAPE && action == GLFW_PRESS ){
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
@@ -71,6 +75,10 @@ float randomColorValue() {
 //Esta función callback será llamada cada vez que se mueva la rueda
 //del ratón sobre el área de dibujo OpenGL
 void scroll_callback ( GLFWwindow *window, double xoffset, double yoffset ) {
+    if ( PAG::GUI::getInstancia().capturaRaton() ) {
+        return;
+    }
+
     std::ostringstream oss;
     oss << std::fixed << std::setprecision(2);
     oss << "Movida la rueda del ratón " << xoffset
@@ -149,15 +157,15 @@ int main() {
     //3D construido. Ahora este mensaje va a la ventana de Mensajes, no a la consola
     PAG::GUI::getInstancia().agregarMensaje(PAG::Renderer::getInstancia().consultarOpenGL());
 
-    //Inicializamos Dear ImGui
-    PAG::GUI::getInstancia().inicializar(window);
-
     //Registramos los callbacks que responderán a los eventos principales
     glfwSetWindowRefreshCallback ( window, window_refresh_callback );
     glfwSetFramebufferSizeCallback ( window, framebuffer_size_callback );
     glfwSetKeyCallback ( window, key_callback );
     glfwSetMouseButtonCallback ( window, mouse_button_callback );
     glfwSetScrollCallback ( window, scroll_callback );
+
+    //Inicializamos Dear ImGui
+    PAG::GUI::getInstancia().inicializar(window);
 
     //Establecemos un gris medio como color con el que se borrará el frame buffer
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
@@ -167,13 +175,9 @@ int main() {
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
     PAG::Renderer::getInstancia().inicializarOpenGL();
 
-    //Creamos el shader program y el modelo (una sola vez, antes del ciclo de eventos)
-    try {
-        PAG::Renderer::getInstancia().creaShaderProgram("pag03");
-        PAG::Renderer::getInstancia().creaModelo();
-    } catch (const std::exception& e) {
-        PAG::GUI::getInstancia().agregarMensaje(e.what());
-    }
+    //Creamos el modelo (una sola vez, antes del ciclo de eventos).
+    //El shader program lo carga el usuario desde la ventana "Shader Program"
+    PAG::Renderer::getInstancia().creaModelo();
 
     //Ciclo de eventos de la aplicación. La condición de parada es que la
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el

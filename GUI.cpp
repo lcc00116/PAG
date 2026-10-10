@@ -9,6 +9,8 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <imgui_stdlib.h>
+#include <exception>
 
 namespace PAG {
 
@@ -81,6 +83,26 @@ namespace PAG {
         }
         ImGui::End();
 
+        //---------- Ventana "Shader Program": nombre base de los shaders ----------
+
+        ImGui::SetNextWindowPos(ImVec2(10, 400), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(280, 120), ImGuiCond_Once);
+
+        if (ImGui::Begin("Shader Program")) {
+            ImGui::SetWindowFontScale(1.5f);
+            ImGui::InputText("##", &_nombreShader, ImGuiInputTextFlags_AutoSelectAll);
+
+            if (ImGui::Button("Load")) {
+                try {
+                    Renderer::getInstancia().creaShaderProgram(_nombreShader);
+                    agregarMensaje("Shader program '" + _nombreShader + "' cargado correctamente");
+                } catch (const std::exception& e) {
+                    agregarMensaje(e.what());
+                }
+            }
+        }
+        ImGui::End();
+
         //Renderiza todos los controles dibujados en este frame y los manda a OpenGL
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -99,6 +121,14 @@ namespace PAG {
 
     void GUI::agregarMensaje(const std::string& mensaje) {
         _mensajes.push_back(mensaje);
+    }
+
+    bool GUI::capturaTeclado() const {
+        return ImGui::GetIO().WantCaptureKeyboard;
+    }
+
+    bool GUI::capturaRaton() const {
+        return ImGui::GetIO().WantCaptureMouse;
     }
 
 }
