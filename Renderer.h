@@ -38,6 +38,7 @@ namespace PAG {
         void moverCamara(MovimientoCamara tipo, float a, float b = 0.0f);
         void arrastrarRaton(float dx, float dy);
         void seleccionarMovimiento(MovimientoCamara m) { _movimiento = m; }
+        MovimientoCamara getMovimiento() const { return _movimiento; }
     };
 } // PAG
 

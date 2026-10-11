@@ -103,6 +103,25 @@ namespace PAG {
         }
         ImGui::End();
 
+        //---------- Ventana "Camera": movimiento de cámara ----------
+
+        ImGui::SetNextWindowPos(ImVec2(710, 340), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(300, 200), ImGuiCond_Once);
+
+        if (ImGui::Begin("Camera")) {
+            ImGui::SetWindowFontScale(1.5f);
+
+            //Mismo orden que el enum MovimientoCamara
+            const char* nombres[] = { "Pan", "Tilt", "Dolly", "Crane", "Orbit", "Zoom" };
+            int actual = static_cast<int>(Renderer::getInstancia().getMovimiento());
+
+            //Combo devuelve true solo en el frame en que el usuario cambia la opción
+            if (ImGui::Combo("Movement", &actual, nombres, IM_ARRAYSIZE(nombres))) {
+                Renderer::getInstancia().seleccionarMovimiento(static_cast<MovimientoCamara>(actual));
+            }
+        }
+        ImGui::End();
+
         //Renderiza todos los controles dibujados en este frame y los manda a OpenGL
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
