@@ -52,6 +52,7 @@ namespace PAG {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         _shaderProgram.usar();
+        _shaderProgram.setUniform("mModelViewProj", _camera.matrizProyeccion() * _camera.matrizVision());
         glBindVertexArray(idVAO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
 
@@ -61,6 +62,7 @@ namespace PAG {
     //Cambio del tamaño de la ventana
     void Renderer::redimensionar(int width, int height) {
         glViewport(0, 0, width, height);
+        _camera.setViewport(width, height);
     }
 
     //Cambia el color de la ventana
@@ -125,6 +127,31 @@ namespace PAG {
         glGenBuffers(1, &idIBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), indices, GL_STATIC_DRAW);
+    }
+
+    void Renderer::moverCamara(MovimientoCamara tipo, float a, float b) {
+        switch (tipo) {
+            case MovimientoCamara::Pan:   _camera.pan(a); break;
+            case MovimientoCamara::Tilt:  _camera.tilt(a); break;
+            case MovimientoCamara::Dolly: _camera.dolly(a, b); break;  // a = derecha, b = adelante
+            case MovimientoCamara::Crane: _camera.crane(a); break;
+            case MovimientoCamara::Orbit: _camera.orbit(a, b); break;  // a = latitud, b = longitud
+            case MovimientoCamara::Zoom:  _camera.zoom(a); break;
+        }
+    }
+
+    // Convierte el arrastre del ratón (en píxeles) según el movimiento seleccionado
+    void Renderer::arrastrarRaton(float dx, float dy) {
+        const float g = 0.2f;    // grados por píxel
+        const float u = 0.01f;   // unidades de escena por píxel
+        switch (_movimiento) {
+            case MovimientoCamara::Pan:   moverCamara(_movimiento, dx * g); break;
+            case MovimientoCamara::Tilt:  moverCamara(_movimiento, dy * g); break;
+            case MovimientoCamara::Dolly: moverCamara(_movimiento, -dx * u, dy * u); break;
+            case MovimientoCamara::Crane: moverCamara(_movimiento, dy * u); break;
+            case MovimientoCamara::Orbit: moverCamara(_movimiento, dy * g, -dx * g); break;
+            case MovimientoCamara::Zoom:  moverCamara(_movimiento, dy * g); break;
+        }
     }
 
 } // PAG

@@ -4,6 +4,8 @@
 #include <string>
 #include <glad/glad.h>
 #include "ShaderProgram.h"
+#include "Camera.h"
+#include "MovimientoCamara.h"
 
 namespace PAG {
     class Renderer {
@@ -17,6 +19,8 @@ namespace PAG {
         GLuint idVBOColores = 0;  // Identificador del VBO de colores (versión no entrelazada)
 
         PAG::ShaderProgram _shaderProgram;
+        Camera _camera;
+        MovimientoCamara _movimiento = MovimientoCamara::Orbit;
 
         Renderer();
 
@@ -31,6 +35,9 @@ namespace PAG {
         std::string consultarOpenGL();
         void creaShaderProgram(const std::string& nombreBase);
         void creaModelo();
+        void moverCamara(MovimientoCamara tipo, float a, float b = 0.0f);
+        void arrastrarRaton(float dx, float dy);
+        void seleccionarMovimiento(MovimientoCamara m) { _movimiento = m; }
     };
 } // PAG
 

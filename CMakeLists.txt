@@ -18,7 +18,10 @@ add_executable( ${PROJECT_NAME} ${MY_FILES}
         GUI.cpp
         GUI.h
         ShaderProgram.cpp
-        ShaderProgram.h)
+        ShaderProgram.h
+        MovimientoCamara.h
+        Camera.cpp
+        Camera.h)
 
 #Copia los shaders al directorio donde se ejecuta el programa
 configure_file(${CMAKE_SOURCE_DIR}/pag03-vs.glsl ${CMAKE_BINARY_DIR}/pag03-vs.glsl COPYONLY)
@@ -30,5 +33,7 @@ target_include_directories( ${PROJECT_NAME} PUBLIC GLAD/include
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL glfw)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL glfw glm::glm)

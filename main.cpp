@@ -12,6 +12,9 @@
 #include "GUI.h"
 #include "Renderer.h"
 
+static bool arrastrando = false;      //Está pulsado el botón izquierdo?
+static double ultimoX = 0.0, ultimoY = 0.0;   //Posición del ratón en el evento anterior
+
 //Esta función callback será llamada cuando GLFW produzca algún error
 void error_callback(int codigo, const char* desc) {
     std::string aux(desc);
@@ -63,6 +66,24 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
     else if ( action == GLFW_RELEASE ){
         PAG::GUI::getInstancia().agregarMensaje("Soltado el botón: " + std::to_string(button));
         PAG::GUI::getInstancia().notificarBotonRaton(button, false);
+    }
+
+    if (button == GLFW_MOUSE_BUTTON_LEFT) {
+        if (action == GLFW_PRESS && !PAG::GUI::getInstancia().capturaRaton()) {
+            arrastrando = true;
+            glfwGetCursorPos(window, &ultimoX, &ultimoY);   // graba dónde se pulsó
+        } else if (action == GLFW_RELEASE) {
+            arrastrando = false;
+        }
+    }
+}
+
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
+    if (arrastrando) {
+        PAG::Renderer::getInstancia().arrastrarRaton(static_cast<float>(xpos - ultimoX),
+                                                     static_cast<float>(ypos - ultimoY));
+        ultimoX = xpos;
+        ultimoY = ypos;
     }
 }
 
@@ -162,6 +183,7 @@ int main() {
     glfwSetFramebufferSizeCallback ( window, framebuffer_size_callback );
     glfwSetKeyCallback ( window, key_callback );
     glfwSetMouseButtonCallback ( window, mouse_button_callback );
+    glfwSetCursorPosCallback ( window, cursor_position_callback );
     glfwSetScrollCallback ( window, scroll_callback );
 
     //Inicializamos Dear ImGui
