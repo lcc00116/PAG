@@ -37,8 +37,11 @@ namespace PAG {
         void creaModelo();
         void moverCamara(MovimientoCamara tipo, float a, float b = 0.0f);
         void arrastrarRaton(float dx, float dy);
+        void moverPasoCamara(int dirX, int dirY);
         void seleccionarMovimiento(MovimientoCamara m) { _movimiento = m; }
         MovimientoCamara getMovimiento() const { return _movimiento; }
+        float getFovCamara() const { return _camera.getFovX(); }
+        void setFovCamara(float grados) { _camera.setFovX(grados); }
     };
 } // PAG
 

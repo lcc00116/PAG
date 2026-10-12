@@ -154,4 +154,18 @@ namespace PAG {
         }
     }
 
+    // dirX: -1 = izquierda, +1 = derecha; dirY: +1 = arriba, -1 = abajo
+    void Renderer::moverPasoCamara(int dirX, int dirY) {
+        const float paso = 2.0f;     // grados por pulsación
+        const float lineal = 0.1f;   // unidades de escena por pulsación
+        switch (_movimiento) {
+            case MovimientoCamara::Pan:   moverCamara(_movimiento, -dirX * paso); break;
+            case MovimientoCamara::Tilt:  moverCamara(_movimiento, dirY * paso); break;
+            case MovimientoCamara::Dolly: moverCamara(_movimiento, dirX * lineal, dirY * lineal); break;
+            case MovimientoCamara::Crane: moverCamara(_movimiento, dirY * lineal); break;
+            case MovimientoCamara::Orbit: moverCamara(_movimiento, dirY * paso, dirX * paso); break;
+            case MovimientoCamara::Zoom:  moverCamara(_movimiento, -dirY * paso); break;
+        }
+    }
+
 } // PAG

@@ -3,7 +3,7 @@
 #include <ctime>   //para time(), que usamos al generar la semilla
 #include <sstream>
 #include <iomanip>
-#include <stdexcept>
+#include <exception>
 
 //Incluye GLAD siempre ANTES que GLFW
 #include <glad/glad.h>
@@ -49,6 +49,15 @@ void key_callback ( GLFWwindow *window, int key, int scancode, int action, int m
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
 
+    if ( action == GLFW_PRESS || action == GLFW_REPEAT ) {   // REPEAT: al mantener la tecla pulsada
+        switch ( key ) {
+            case GLFW_KEY_LEFT:  PAG::Renderer::getInstancia().moverPasoCamara(-1,  0); break;
+            case GLFW_KEY_RIGHT: PAG::Renderer::getInstancia().moverPasoCamara( 1,  0); break;
+            case GLFW_KEY_UP:    PAG::Renderer::getInstancia().moverPasoCamara( 0,  1); break;
+            case GLFW_KEY_DOWN:  PAG::Renderer::getInstancia().moverPasoCamara( 0, -1); break;
+        }
+    }
+
     if ( action == GLFW_PRESS ) {
         PAG::GUI::getInstancia().agregarMensaje("Tecla pulsada: " + std::to_string(key));
     } else if ( action == GLFW_RELEASE ) {
@@ -84,6 +93,19 @@ void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
                                                      static_cast<float>(ypos - ultimoY));
         ultimoX = xpos;
         ultimoY = ypos;
+    }
+}
+
+//Atiende la petición de carga de shader hecha desde la ventana "Shader Program"
+void procesarCargaShader() {
+    std::string nombre;
+    if (PAG::GUI::getInstancia().consumirPeticionShader(nombre)) {
+        try {
+            PAG::Renderer::getInstancia().creaShaderProgram(nombre);
+            PAG::GUI::getInstancia().agregarMensaje("Shader program '" + nombre + "' cargado correctamente");
+        } catch (const std::exception& e) {
+            PAG::GUI::getInstancia().agregarMensaje(e.what());
+        }
     }
 }
 
@@ -197,6 +219,11 @@ int main() {
     //No tiene por qué ejecutarse en cada paso por el ciclo de eventos
     PAG::Renderer::getInstancia().inicializarOpenGL();
 
+    //Sincronizamos viewport y cámara con el tamaño real del framebuffer desde el principio
+    int anchoFB, altoFB;
+    glfwGetFramebufferSize(window, &anchoFB, &altoFB);
+    PAG::Renderer::getInstancia().redimensionar(anchoFB, altoFB);
+
     //Creamos el modelo (una sola vez, antes del ciclo de eventos).
     //El shader program lo carga el usuario desde la ventana "Shader Program"
     PAG::Renderer::getInstancia().creaModelo();
@@ -205,6 +232,7 @@ int main() {
     //ventana principal deba cerrarse. Por ejemplo, si el usuario pulsa el
     //botón de cerrar la ventana
     while (!glfwWindowShouldClose(window)) {
+        procesarCargaShader();
         PAG::Renderer::getInstancia().refrescar();
         PAG::GUI::getInstancia().refrescar();
 
