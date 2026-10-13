@@ -111,3 +111,75 @@ y se ha añadido a la interfaz un control para cargarlos.
   `ShaderProgram` gestiona los shaders y `GUI` se ocupa de la
   interfaz. `GUI` solo usa `Renderer` para avisarle del color de fondo
   y de la carga de shaders.
+
+
+# Práctica 5 - Lucía Cano Cubillo
+
+En esta práctica se ha añadido una cámara virtual cuyos movimientos se
+controlan con el ratón, el teclado y una ventana de ImGui.
+
+![Diagrama de clases](img/pag05.svg)
+
+## Cambios realizados
+
+- **Nueva clase `PAG::Camera`:** guarda la posición de la cámara, el punto
+  al que mira, el ángulo de visión horizontal, los planos near y far y el
+  tamaño del viewport. Con ellos calcula la matriz de visión
+  (`glm::lookAt`) y la de proyección (`glm::perspective`). También
+  implementa los movimientos pan, tilt, dolly, crane, orbit y zoom.
+- **Nuevo enumerado `MovimientoCamara`:** identifica el movimiento que
+  está seleccionado.
+- **`PAG::Renderer`:** tiene una `Camera`. En cada refresco multiplica
+  las matrices de proyección y de visión y se las pasa al vertex shader
+  como uniform (`mModelViewProj`). También convierte el ratón, las teclas
+  y los botones en movimientos de cámara.
+- **`PAG::ShaderProgram`:** nuevo método `setUniform` para enviar una
+  matriz al shader.
+- **`PAG::GUI`:** nueva ventana "Camera" con un desplegable para elegir
+  el movimiento y botones que cambian según el movimiento elegido.
+- **`main.cpp`:** nuevos callbacks para arrastrar con el ratón y para las
+  teclas de flecha. Además, ahora es `main.cpp` quien carga el shader
+  cuando se pulsa "Load" y quien escribe el mensaje de éxito o de error
+  (la `GUI` solo avisa de que se ha pulsado el botón).
+- **Vertex shader:** ahora multiplica la posición de cada vértice por
+  `mModelViewProj`.
+
+## Decisiones de diseño
+
+- **La cámara guarda el ángulo horizontal**, como pide el enunciado, y
+  calcula el vertical que necesita `glm::perspective`.
+- **Pan y tilt** giran el punto al que mira la cámara sin mover la
+  cámara. **Dolly y crane** mueven a la vez la cámara y el punto al que
+  mira (dolly en el plano XZ y crane en el eje Y). **Orbit** mueve la
+  cámara alrededor del punto al que mira.
+- **Límite de 89 grados** en tilt y orbit, para evitar la situación
+  anómala de mirar justo hacia arriba o hacia abajo.
+- **El zoom** cambia el ángulo de visión, que se limita entre 5 y 120
+  grados.
+- **El `Renderer` coordina todo:** ratón, teclas y botones llaman al
+  `Renderer`, y este mueve la cámara. Así hay un único sitio donde se
+  decide qué hace cada movimiento.
+- **Los mensajes solo se escriben desde `main.cpp`**, como pide el
+  enunciado. Por eso la carga del shader se hace en `main.cpp`.
+
+## Instrucciones de uso
+
+1. Pulsa "Load" en la ventana "Shader Program" para cargar los shaders
+   (por ejemplo `pag03`).
+2. En la ventana "Camera", elige el movimiento en el desplegable
+   "Movement".
+3. Mueve la cámara de una de estas formas:
+  - Arrastrando con el botón izquierdo del ratón sobre la escena.
+  - Con los botones de la ventana "Camera".
+  - Con las flechas del teclado:
+
+   | Movimiento | Izquierda / Derecha | Arriba / Abajo |
+      |------------|---------------------|----------------|
+   | Pan        | gira a izquierda / derecha | - |
+   | Tilt       | - | mira arriba / abajo |
+   | Dolly      | se desplaza a izquierda / derecha | avanza / retrocede |
+   | Crane      | - | sube / baja |
+   | Orbit      | gira en longitud | gira en latitud |
+   | Zoom       | - | acerca / aleja |
+
+4. La rueda del ratón sigue cambiando el color de fondo.
