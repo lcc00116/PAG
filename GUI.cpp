@@ -10,7 +10,6 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_stdlib.h>
-#include <exception>
 
 namespace PAG {
 
@@ -32,8 +31,6 @@ namespace PAG {
     void GUI::inicializar(GLFWwindow* window) {
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO();
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init();
@@ -93,12 +90,83 @@ namespace PAG {
             ImGui::InputText("##", &_nombreShader, ImGuiInputTextFlags_AutoSelectAll);
 
             if (ImGui::Button("Load")) {
-                try {
-                    Renderer::getInstancia().creaShaderProgram(_nombreShader);
-                    agregarMensaje("Shader program '" + _nombreShader + "' cargado correctamente");
-                } catch (const std::exception& e) {
-                    agregarMensaje(e.what());
+                _cargaShaderPendiente = true;   //main.cpp se encargará de cargarlo
+            }
+        }
+        ImGui::End();
+
+        //---------- Ventana "Camera": movimiento de cámara ----------
+
+        ImGui::SetNextWindowPos(ImVec2(710, 340), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(300, 260), ImGuiCond_Once);
+
+        if (ImGui::Begin("Camera")) {
+            ImGui::SetWindowFontScale(1.5f);
+
+            //Mismo orden que el enum MovimientoCamara
+            const char* nombres[] = { "Pan", "Tilt", "Dolly", "Crane", "Orbit", "Zoom" };
+            int actual = static_cast<int>(Renderer::getInstancia().getMovimiento());
+
+            //Combo devuelve true solo en el frame en que el usuario cambia la opción
+            if (ImGui::Combo("Movement", &actual, nombres, IM_ARRAYSIZE(nombres))) {
+                Renderer::getInstancia().seleccionarMovimiento(static_cast<MovimientoCamara>(actual));
+            }
+
+            Renderer& r = Renderer::getInstancia();
+            const float paso = 2.0f;   //Grados por clic
+            const float lineal = 0.1f;   //Unidades de escena por clic
+
+            switch (r.getMovimiento()) {
+                case MovimientoCamara::Zoom: {
+                    //Leemos el ángulo cada frame: así el slider sigue al zoom hecho con el ratón
+                    float fov = r.getFovCamara();
+                    if (ImGui::SliderFloat("Angle", &fov, 5.0f, 120.0f)) {
+                        r.setFovCamara(fov);
+                    }
+                    break;
                 }
+                case MovimientoCamara::Pan:
+                    ImGui::Text("Direction");
+                    if (ImGui::Button("<- Left"))  r.moverCamara(MovimientoCamara::Pan, paso);
+                    ImGui::SameLine();
+                    if (ImGui::Button("Right ->")) r.moverCamara(MovimientoCamara::Pan, -paso);
+                    break;
+
+                case MovimientoCamara::Tilt:
+                    ImGui::Text("Direction");
+                    if (ImGui::Button("^ Up ^"))   r.moverCamara(MovimientoCamara::Tilt, paso);
+                    ImGui::SameLine();
+                    if (ImGui::Button("v Down v")) r.moverCamara(MovimientoCamara::Tilt, -paso);
+                    break;
+
+                case MovimientoCamara::Dolly:
+                    ImGui::Text("Direction");
+                    ImGui::SetCursorPosX(ImGui::GetWindowWidth() * 0.3f);
+                    if (ImGui::Button("^ Back ^"))  r.moverCamara(MovimientoCamara::Dolly, 0.0f, -lineal);
+                    if (ImGui::Button("<- Left"))   r.moverCamara(MovimientoCamara::Dolly, -lineal, 0.0f);
+                    ImGui::SameLine();
+                    if (ImGui::Button("Right ->"))  r.moverCamara(MovimientoCamara::Dolly, lineal, 0.0f);
+                    ImGui::SetCursorPosX(ImGui::GetWindowWidth() * 0.3f);
+                    if (ImGui::Button("v Front v")) r.moverCamara(MovimientoCamara::Dolly, 0.0f, lineal);
+                    break;
+
+                case MovimientoCamara::Crane:
+                    ImGui::Text("Direction");
+                    if (ImGui::Button("^ Up ^"))    r.moverCamara(MovimientoCamara::Crane, lineal);
+                    ImGui::SameLine();
+                    if (ImGui::Button("v Down v"))  r.moverCamara(MovimientoCamara::Crane, -lineal);
+                    break;
+
+                case MovimientoCamara::Orbit:
+                    ImGui::Text("Latitude");
+                    if (ImGui::Button("^ North ^")) r.moverCamara(MovimientoCamara::Orbit, paso, 0.0f);
+                    ImGui::SameLine();
+                    if (ImGui::Button("v South v")) r.moverCamara(MovimientoCamara::Orbit, -paso, 0.0f);
+                    ImGui::Text("Longitude");
+                    if (ImGui::Button("<- West"))   r.moverCamara(MovimientoCamara::Orbit, 0.0f, -paso);
+                    ImGui::SameLine();
+                    if (ImGui::Button("East ->"))   r.moverCamara(MovimientoCamara::Orbit, 0.0f, paso);
+                    break;
             }
         }
         ImGui::End();
@@ -129,6 +197,15 @@ namespace PAG {
 
     bool GUI::capturaRaton() const {
         return ImGui::GetIO().WantCaptureMouse;
+    }
+
+    bool GUI::consumirPeticionShader(std::string& nombre) {
+        if (!_cargaShaderPendiente) {
+            return false;
+        }
+        _cargaShaderPendiente = false;
+        nombre = _nombreShader;
+        return true;
     }
 
 }
