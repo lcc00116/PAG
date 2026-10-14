@@ -67,4 +67,44 @@ namespace PAG {
             glDeleteVertexArrays(1, &idVAO);
         }
     }
+
+    Modelo::Modelo(Modelo&& otro) noexcept
+    : idVAO(std::exchange(otro.idVAO, 0)),
+      idVBO(std::exchange(otro.idVBO, 0)),
+      idVBOColores(std::exchange(otro.idVBOColores, 0)),
+      idIBO(std::exchange(otro.idIBO, 0)),
+      numIndices(std::exchange(otro.numIndices, 0)),
+      _matrizModelado(otro._matrizModelado) {}
+
+    Modelo& Modelo::operator=(Modelo&& otro) noexcept {
+        if (this != &otro) {
+            // Intercambiamos: lo que tenía este objeto lo liberará 'otro' al destruirse
+            std::swap(idVAO, otro.idVAO);
+            std::swap(idVBO, otro.idVBO);
+            std::swap(idVBOColores, otro.idVBOColores);
+            std::swap(idIBO, otro.idIBO);
+            std::swap(numIndices, otro.numIndices);
+            std::swap(_matrizModelado, otro._matrizModelado);
+        }
+        return *this;
+    }
+    void Modelo::dibujar() const {
+        // El IBO está guardado dentro del VAO, así que basta con activar el VAO
+        glBindVertexArray(idVAO);
+        glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, nullptr);
+    }
+
+    Modelo Modelo::triangulo() {
+        std::vector<glm::vec3> posiciones = { {-0.5f, -0.5f, 0.0f},
+                                              { 0.5f, -0.5f, 0.0f},
+                                              { 0.0f,  0.5f, 0.0f} };
+
+        std::vector<glm::vec3> colores = { {1.0f, 0.0f, 0.0f},
+                                           {0.0f, 1.0f, 0.0f},
+                                           {0.0f, 0.0f, 1.0f} };
+
+        std::vector<GLuint> indices = { 0, 1, 2 };
+
+        return Modelo(posiciones, colores, indices);
+    }
 } // PAG
