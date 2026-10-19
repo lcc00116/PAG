@@ -11,21 +11,7 @@ namespace PAG {
 
     //Destructor
     Renderer::~Renderer() {
-        // ShaderProgram se destruye solo (es un atributo por valor, no un puntero);
-        // su propio destructor libera idVS, idFS e idSP.
-        // Aquí solo liberamos lo que sigue gestionando Renderer directamente.
-        if (idVBO != 0) {
-            glDeleteBuffers(1, &idVBO);
-        }
-        if (idIBO != 0) {
-            glDeleteBuffers(1, &idIBO);
-        }
-        if (idVAO != 0) {
-            glDeleteVertexArrays(1, &idVAO);
-        }
-        if (idVBOColores != 0) {
-            glDeleteBuffers(1, &idVBOColores);
-        }
+
     }
 
     //Consulta el objeto único de la clase y devuelve su dirección de memoria
@@ -45,18 +31,23 @@ namespace PAG {
     void Renderer::refrescar() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        if (_shaderProgram.getId() == 0 || idVAO == 0) {
+        if (_shaderProgram.getId() == 0 || _modelos.empty()) {
             return;
         }
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         _shaderProgram.usar();
-        _shaderProgram.setUniform("mModelViewProj", _camera.matrizProyeccion() * _camera.matrizVision());
-        glBindVertexArray(idVAO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
 
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+        // Lo común a todos los modelos: proyección y visión de la cámara
+        glm::mat4 proyeccionVision = _camera.matrizProyeccion() * _camera.matrizVision();
+
+        for (const Modelo& modelo : _modelos) {
+            // Cada modelo tiene su propia transformación de modelado
+            _shaderProgram.setUniform("mModelViewProj",
+                                      proyeccionVision * modelo.getMatrizModelado());
+            modelo.dibujar();
+        }
     }
 
     //Cambio del tamaño de la ventana
@@ -98,35 +89,7 @@ namespace PAG {
     }
 
     void Renderer::creaModelo() {
-        GLfloat vertices[] = { -0.5f, -0.5f, 0.0f,
-                                0.5f, -0.5f, 0.0f,
-                                0.0f,  0.5f, 0.0f };
-        GLuint indices[] = { 0, 1, 2 };
-
-        GLfloat colores[] = { 1.0f, 0.0f, 0.0f,
-                               0.0f, 1.0f, 0.0f,
-                               0.0f, 0.0f, 1.0f };
-
-        glGenVertexArrays(1, &idVAO);
-        glBindVertexArray(idVAO);
-
-        glGenBuffers(1, &idVBO);
-        glBindBuffer(GL_ARRAY_BUFFER, idVBO);
-        glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-        glEnableVertexAttribArray(0);
-
-        glGenBuffers(1, &idVBOColores);
-        glBindBuffer(GL_ARRAY_BUFFER, idVBOColores);
-        glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), colores, GL_STATIC_DRAW);
-
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-        glEnableVertexAttribArray(1);
-
-        glGenBuffers(1, &idIBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), indices, GL_STATIC_DRAW);
+        _modelos.push_back(Modelo::triangulo());
     }
 
     void Renderer::moverCamara(MovimientoCamara tipo, float a, float b) {

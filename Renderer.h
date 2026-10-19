@@ -3,9 +3,11 @@
 
 #include <string>
 #include <glad/glad.h>
+#include <vector>
 #include "ShaderProgram.h"
 #include "Camera.h"
 #include "MovimientoCamara.h"
+#include "Modelo.h"
 
 namespace PAG {
     class Renderer {
@@ -13,10 +15,7 @@ namespace PAG {
         static Renderer* instancia;
         float _bgRed, _bgGreen, _bgBlue;
 
-        GLuint idVAO = 0;         // Identificador del vertex array object
-        GLuint idVBO = 0;         // Identificador del vertex buffer object
-        GLuint idIBO = 0;         // Identificador del index buffer object
-        GLuint idVBOColores = 0;  // Identificador del VBO de colores (versión no entrelazada)
+        std::vector<Modelo> _modelos;
 
         PAG::ShaderProgram _shaderProgram;
         Camera _camera;
