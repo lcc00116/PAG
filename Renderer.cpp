@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+#include <stdexcept>
 #include "glad/glad.h"
 
 namespace PAG {
@@ -129,6 +130,13 @@ namespace PAG {
             case MovimientoCamara::Orbit: moverCamara(_movimiento, dirY * paso, dirX * paso); break;
             case MovimientoCamara::Zoom:  moverCamara(_movimiento, -dirY * paso); break;
         }
+    }
+
+    void Renderer::eliminarModelo(std::size_t indice) {
+        if (indice >= _modelos.size()) {
+            throw std::out_of_range("No existe ese modelo");
+        }
+        _modelos.erase(_modelos.begin() + indice);
     }
 
 } // PAG

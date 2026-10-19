@@ -171,6 +171,41 @@ namespace PAG {
         }
         ImGui::End();
 
+        //---------- Ventana "Models": añadir y eliminar modelos ----------
+
+        ImGui::SetNextWindowPos(ImVec2(710, 10), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(300, 320), ImGuiCond_Once);
+
+        if (ImGui::Begin("Models")) {
+            ImGui::SetWindowFontScale(1.5f);
+            Renderer& r = Renderer::getInstancia();
+
+            if (ImGui::Button("Add triangle")) {
+                r.creaModelo();
+            }
+
+            ImGui::Separator();
+
+            //Una línea por modelo; al hacer clic en ella, queda seleccionado
+            for (std::size_t i = 0; i < r.numModelos(); ++i) {
+                std::string etiqueta = "Model " + std::to_string(i + 1);
+                if (ImGui::Selectable(etiqueta.c_str(), _modeloSeleccionado == static_cast<int>(i))) {
+                    _modeloSeleccionado = static_cast<int>(i);
+                }
+            }
+
+            ImGui::Separator();
+
+            if (ImGui::Button("Delete selected")) {
+                //Solo borramos si hay un modelo seleccionado y existe
+                if (_modeloSeleccionado >= 0 && _modeloSeleccionado < static_cast<int>(r.numModelos())) {
+                    r.eliminarModelo(static_cast<std::size_t>(_modeloSeleccionado));
+                    _modeloSeleccionado = -1;   //Ya no queda ninguno seleccionado
+                }
+            }
+        }
+        ImGui::End();   
+
         //Renderiza todos los controles dibujados en este frame y los manda a OpenGL
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

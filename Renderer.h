@@ -34,6 +34,8 @@ namespace PAG {
         std::string consultarOpenGL();
         void creaShaderProgram(const std::string& nombreBase);
         void creaModelo();
+        void eliminarModelo(std::size_t indice);
+        std::size_t numModelos() const {return _modelos.size();}
         void moverCamara(MovimientoCamara tipo, float a, float b = 0.0f);
         void arrastrarRaton(float dx, float dy);
         void moverPasoCamara(int dirX, int dirY);
