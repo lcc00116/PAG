@@ -10,6 +10,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_stdlib.h>
+#include <glm/glm.hpp>
 
 namespace PAG {
 
@@ -216,10 +217,9 @@ namespace PAG {
         //---------- Ventana "Transform": transformar el modelo seleccionado ----------
 
         ImGui::SetNextWindowPos(ImVec2(714, 180), ImGuiCond_Once);
-        ImGui::SetNextWindowSize(ImVec2(300, 200), ImGuiCond_Once);
 
-        if (ImGui::Begin("Transform")) {
-            ImGui::SetWindowFontScale(1.5f);
+        if (ImGui::Begin("Transform", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+            ImGui::SetWindowFontScale(1.0f);
             Renderer& r = Renderer::getInstancia();
             const float desplaza = 0.1f;   //Unidades de escena por clic
 
@@ -242,6 +242,25 @@ namespace PAG {
                 if (ImGui::Button("- Z")) r.trasladarModelo(i, 0.0f, 0.0f, -desplaza);
                 ImGui::SameLine();
                 if (ImGui::Button("+ Z")) r.trasladarModelo(i, 0.0f, 0.0f,  desplaza);
+
+                const float gira = 10.0f;   //Grados por clic
+                ImGui::Text("Rotate");
+                if (ImGui::Button("- RX")) r.rotarModelo(i, -gira, glm::vec3(1.0f, 0.0f, 0.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("+ RX")) r.rotarModelo(i,  gira, glm::vec3(1.0f, 0.0f, 0.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("- RY")) r.rotarModelo(i, -gira, glm::vec3(0.0f, 1.0f, 0.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("+ RY")) r.rotarModelo(i,  gira, glm::vec3(0.0f, 1.0f, 0.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("- RZ")) r.rotarModelo(i, -gira, glm::vec3(0.0f, 0.0f, 1.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("+ RZ")) r.rotarModelo(i,  gira, glm::vec3(0.0f, 0.0f, 1.0f));
+
+                ImGui::Text("Scale");
+                if (ImGui::Button("Smaller")) r.escalarModelo(i, 0.9f);
+                ImGui::SameLine();
+                if (ImGui::Button("Bigger"))  r.escalarModelo(i, 1.1f);
             }
         }
         ImGui::End();

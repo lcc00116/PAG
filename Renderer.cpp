@@ -168,4 +168,20 @@ namespace PAG {
                                  * modelo.getMatrizModelado());
     }
 
+    void Renderer::rotarModelo(std::size_t indice, float grados, const glm::vec3& eje) {
+        Modelo& modelo = _modelos.at(indice);
+
+        //glm::rotate(m, ...) calcula m * rotación: la rotación se aplica ANTES de
+        //colocar el modelo, así que gira sobre sí mismo y no alrededor del origen
+        modelo.setMatrizModelado(glm::rotate(modelo.getMatrizModelado(),
+                                             glm::radians(grados), eje));
+    }
+
+    void Renderer::escalarModelo(std::size_t indice, float factor) {
+        Modelo& modelo = _modelos.at(indice);
+
+        //Igual que la rotación: m * escalado, así que crece o encoge sobre su propio centro
+        modelo.setMatrizModelado(glm::scale(modelo.getMatrizModelado(), glm::vec3(factor)));
+    }
+
 } // PAG
