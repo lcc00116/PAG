@@ -159,4 +159,13 @@ namespace PAG {
         _modelos.erase(_modelos.begin() + indice);
     }
 
+    void Renderer::trasladarModelo(std::size_t indice, float x, float y, float z) {
+        Modelo& modelo = _modelos.at(indice);   //Lanza std::out_of_range si no existe
+
+        //La traslación va a la IZQUIERDA de la matriz actual, así que se mueve
+        //según los ejes de la escena, y no según los del modelo
+        modelo.setMatrizModelado(glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z))
+                                 * modelo.getMatrizModelado());
+    }
+
 } // PAG

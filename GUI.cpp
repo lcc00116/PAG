@@ -42,11 +42,13 @@ namespace PAG {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+
         //---------- Ventana "Fondo": selector de color ----------
 
         //Posición y tamaño iniciales (solo la primera vez que se abre)
         ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
         ImGui::SetNextWindowSize(ImVec2(280, 380), ImGuiCond_Once);
+        ImGui::SetNextWindowCollapsed(true, ImGuiCond_Once);   //Empieza plegada
 
         //Crea la ventana; si está contraída, Begin devuelve false y no dibujamos nada dentro
         if (ImGui::Begin("Fondo")) {
@@ -60,10 +62,11 @@ namespace PAG {
         }
         ImGui::End(); //Siempre hay que llamarlo
 
+
         //---------- Ventana "Mensajes": histórico de mensajes ----------
 
-        ImGui::SetNextWindowPos(ImVec2(300, 10), ImGuiCond_Once);
-        ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_Once);
+        ImGui::SetNextWindowPos(ImVec2(10, 446), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(420, 120), ImGuiCond_Once);
 
         if (ImGui::Begin("Mensajes")) {
             ImGui::SetWindowFontScale(1.0f);
@@ -80,10 +83,11 @@ namespace PAG {
         }
         ImGui::End();
 
+
         //---------- Ventana "Shader Program": nombre base de los shaders ----------
 
-        ImGui::SetNextWindowPos(ImVec2(10, 400), ImGuiCond_Once);
-        ImGui::SetNextWindowSize(ImVec2(280, 120), ImGuiCond_Once);
+        ImGui::SetNextWindowPos(ImVec2(10, 50), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(280, 110), ImGuiCond_Once);
 
         if (ImGui::Begin("Shader Program")) {
             ImGui::SetWindowFontScale(1.5f);
@@ -95,10 +99,11 @@ namespace PAG {
         }
         ImGui::End();
 
+
         //---------- Ventana "Camera": movimiento de cámara ----------
 
-        ImGui::SetNextWindowPos(ImVec2(710, 340), ImGuiCond_Once);
-        ImGui::SetNextWindowSize(ImVec2(300, 260), ImGuiCond_Once);
+        ImGui::SetNextWindowPos(ImVec2(714, 390), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(300, 176), ImGuiCond_Once);
 
         if (ImGui::Begin("Camera")) {
             ImGui::SetWindowFontScale(1.5f);
@@ -171,10 +176,11 @@ namespace PAG {
         }
         ImGui::End();
 
+
         //---------- Ventana "Models": añadir y eliminar modelos ----------
 
-        ImGui::SetNextWindowPos(ImVec2(710, 10), ImGuiCond_Once);
-        ImGui::SetNextWindowSize(ImVec2(300, 320), ImGuiCond_Once);
+        ImGui::SetNextWindowPos(ImVec2(714, 10), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(300, 160), ImGuiCond_Once);
 
         if (ImGui::Begin("Models")) {
             ImGui::SetWindowFontScale(1.5f);
@@ -202,6 +208,40 @@ namespace PAG {
                     r.eliminarModelo(static_cast<std::size_t>(_modeloSeleccionado));
                     _modeloSeleccionado = -1;   //Ya no queda ninguno seleccionado
                 }
+            }
+        }
+        ImGui::End();
+
+
+        //---------- Ventana "Transform": transformar el modelo seleccionado ----------
+
+        ImGui::SetNextWindowPos(ImVec2(714, 180), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(300, 200), ImGuiCond_Once);
+
+        if (ImGui::Begin("Transform")) {
+            ImGui::SetWindowFontScale(1.5f);
+            Renderer& r = Renderer::getInstancia();
+            const float desplaza = 0.1f;   //Unidades de escena por clic
+
+            //Solo se puede transformar si hay un modelo seleccionado y existe
+            if (_modeloSeleccionado < 0 || _modeloSeleccionado >= static_cast<int>(r.numModelos())) {
+                ImGui::Text("Select a model first");
+            } else {
+                std::size_t i = static_cast<std::size_t>(_modeloSeleccionado);
+                ImGui::Text("Model %d", _modeloSeleccionado + 1);
+
+                ImGui::Text("Move");
+                if (ImGui::Button("- X")) r.trasladarModelo(i, -desplaza, 0.0f, 0.0f);
+                ImGui::SameLine();
+                if (ImGui::Button("+ X")) r.trasladarModelo(i,  desplaza, 0.0f, 0.0f);
+                ImGui::SameLine();
+                if (ImGui::Button("- Y")) r.trasladarModelo(i, 0.0f, -desplaza, 0.0f);
+                ImGui::SameLine();
+                if (ImGui::Button("+ Y")) r.trasladarModelo(i, 0.0f,  desplaza, 0.0f);
+                ImGui::SameLine();
+                if (ImGui::Button("- Z")) r.trasladarModelo(i, 0.0f, 0.0f, -desplaza);
+                ImGui::SameLine();
+                if (ImGui::Button("+ Z")) r.trasladarModelo(i, 0.0f, 0.0f,  desplaza);
             }
         }
         ImGui::End();
