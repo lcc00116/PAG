@@ -1,10 +1,20 @@
 #include "Renderer.h"
 
+#include <cstdlib>
+#include <utility>
+#include <glm/gtc/matrix_transform.hpp>
 #include <stdexcept>
 #include "glad/glad.h"
 
 namespace PAG {
     Renderer* Renderer::instancia = nullptr;
+
+    namespace {
+        // Devuelve un número aleatorio entre min y max
+        float aleatorio(float min, float max) {
+            return min + (max - min) * static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
+        }
+    }
 
     //Constructor por defecto
     Renderer::Renderer() {
@@ -90,7 +100,17 @@ namespace PAG {
     }
 
     void Renderer::creaModelo() {
-        _modelos.push_back(Modelo::triangulo());
+        Modelo nuevo = Modelo::triangulo();
+
+        // El primer modelo se queda en el centro; los demás se reparten por la escena
+        if (!_modelos.empty()) {
+            glm::vec3 posicion(aleatorio(-1.0f, 1.0f),    //x
+                               aleatorio(-0.2f, 0.2f),    //y
+                               aleatorio(-1.0f, 0.0f));   //z
+            nuevo.setMatrizModelado(glm::translate(glm::mat4(1.0f), posicion));
+        }
+
+        _modelos.push_back(std::move(nuevo));
     }
 
     void Renderer::moverCamara(MovimientoCamara tipo, float a, float b) {

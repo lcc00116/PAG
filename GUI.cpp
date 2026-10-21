@@ -204,7 +204,7 @@ namespace PAG {
                 }
             }
         }
-        ImGui::End();   
+        ImGui::End();
 
         //Renderiza todos los controles dibujados en este frame y los manda a OpenGL
         ImGui::Render();
