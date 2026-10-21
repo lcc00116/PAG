@@ -36,6 +36,6 @@ target_include_directories( ${PROJECT_NAME} PUBLIC GLAD/include
 find_package(OpenGL REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
+find_package(assimp CONFIG REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL glfw)
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL glfw glm::glm)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL glfw glm::glm assimp::assimp)
