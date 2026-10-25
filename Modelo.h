@@ -3,6 +3,7 @@
 
 #include<vector>
 #include<utility>
+#include<string>
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -31,6 +32,7 @@ namespace PAG {
         Modelo(Modelo&& otro) noexcept;
         Modelo& operator=(Modelo&& otro) noexcept;
         static Modelo triangulo();   //El triángulo de colores de las prácticas anteriores (te queremos, triángulo)
+        static Modelo desdeArchivo(const std::string& ruta);   //Carga un OBJ con Assimp
         void dibujar() const;
         const glm::mat4& getMatrizModelado() const { return _matrizModelado; }
         void setMatrizModelado(const glm::mat4& m) { _matrizModelado = m; }

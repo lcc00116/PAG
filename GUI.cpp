@@ -11,6 +11,7 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_stdlib.h>
 #include <glm/glm.hpp>
+#include <exception>
 
 namespace PAG {
 
@@ -189,6 +190,23 @@ namespace PAG {
 
             if (ImGui::Button("Add triangle")) {
                 r.creaModelo();
+            }
+
+            //Caja de texto con la ruta del OBJ y botón para cargarlo
+            ImGui::InputText("##rutaModelo", &_rutaModelo);
+            if (ImGui::Button("Load OBJ")) {
+                try {
+                    r.cargarModelo(_rutaModelo);
+                    agregarMensaje("Modelo cargado: " + _rutaModelo);
+                } catch (const std::exception& e) {
+                    agregarMensaje(e.what());
+                }
+            }
+
+            //Casilla para ver los modelos en malla de alambre
+            bool alambre = r.getAlambre();
+            if (ImGui::Checkbox("Wireframe", &alambre)) {
+                r.setAlambre(alambre);
             }
 
             ImGui::Separator();

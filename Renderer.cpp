@@ -46,7 +46,7 @@ namespace PAG {
             return;
         }
 
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glPolygonMode(GL_FRONT_AND_BACK, _alambre ? GL_LINE : GL_FILL);
 
         _shaderProgram.usar();
 
@@ -99,18 +99,25 @@ namespace PAG {
         _shaderProgram = std::move(nuevo);  // solo llega aquí si todo ha ido bien
     }
 
-    void Renderer::creaModelo() {
-        Modelo nuevo = Modelo::triangulo();
-
+    void Renderer::anadirModelo(Modelo nuevo) {
         // El primer modelo se queda en el centro; los demás se reparten por la escena
         if (!_modelos.empty()) {
-            glm::vec3 posicion(aleatorio(-1.0f, 1.0f),    //x
-                               aleatorio(-0.2f, 0.2f),    //y
-                               aleatorio(-1.0f, 0.0f));   //z
+            glm::vec3 posicion(aleatorio(-1.0f, 1.0f),    // x
+                               aleatorio(-0.2f, 0.2f),    // y
+                               aleatorio(-1.0f, 0.0f));   // z
             nuevo.setMatrizModelado(glm::translate(glm::mat4(1.0f), posicion));
         }
 
         _modelos.push_back(std::move(nuevo));
+    }
+
+    void Renderer::creaModelo() {
+        anadirModelo(Modelo::triangulo());
+    }
+
+    void Renderer::cargarModelo(const std::string& ruta) {
+        // Si la carga falla, desdeArchivo lanza una excepción y no se añade nada
+        anadirModelo(Modelo::desdeArchivo(ruta));
     }
 
     void Renderer::moverCamara(MovimientoCamara tipo, float a, float b) {
