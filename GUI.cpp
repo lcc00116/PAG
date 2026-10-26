@@ -33,6 +33,8 @@ namespace PAG {
     void GUI::inicializar(GLFWwindow* window) {
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
+        _selectorArchivo.SetTitle("Select an OBJ model");
+        _selectorArchivo.SetTypeFilters({ ".obj" });
 
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init();
@@ -192,15 +194,9 @@ namespace PAG {
                 r.creaModelo();
             }
 
-            //Caja de texto con la ruta del OBJ y botón para cargarlo
-            ImGui::InputText("##rutaModelo", &_rutaModelo);
-            if (ImGui::Button("Load OBJ")) {
-                try {
-                    r.cargarModelo(_rutaModelo);
-                    agregarMensaje("Modelo cargado: " + _rutaModelo);
-                } catch (const std::exception& e) {
-                    agregarMensaje(e.what());
-                }
+            //Botón que abre el selector de archivos
+            if (ImGui::Button("Load OBJ...")) {
+                _selectorArchivo.Open();
             }
 
             //Casilla para ver los modelos en malla de alambre
@@ -230,6 +226,19 @@ namespace PAG {
             }
         }
         ImGui::End();
+
+        _selectorArchivo.Display();
+
+        if (_selectorArchivo.HasSelected()) {
+            std::string ruta = _selectorArchivo.GetSelected().string();
+            try {
+                Renderer::getInstancia().cargarModelo(ruta);
+                agregarMensaje("Modelo cargado: " + ruta);
+            } catch (const std::exception& e) {
+                agregarMensaje(e.what());
+            }
+            _selectorArchivo.ClearSelected();   //si no, volvería a cargarlo en cada frame
+        }
 
 
         //---------- Ventana "Transform": transformar el modelo seleccionado ----------
