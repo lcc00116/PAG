@@ -25,6 +25,12 @@ add_executable( ${PROJECT_NAME} ${MY_FILES}
         Modelo.cpp
         Modelo.h)
 
+#Copia la carpeta de modelos al directorio de ejecución en cada compilación
+add_custom_target(copiar_modelos ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/modelos ${CMAKE_BINARY_DIR}/modelos)
+add_dependencies(${PROJECT_NAME} copiar_modelos)
+
 #Copia los shaders al directorio donde se ejecuta el programa
 configure_file(${CMAKE_SOURCE_DIR}/pag03-vs.glsl ${CMAKE_BINARY_DIR}/pag03-vs.glsl COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/pag03-fs.glsl ${CMAKE_BINARY_DIR}/pag03-fs.glsl COPYONLY)

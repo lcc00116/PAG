@@ -6,6 +6,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <algorithm>
 #include "Modelo.h"
 
 namespace PAG {
@@ -166,7 +167,30 @@ namespace PAG {
         std::vector<GLuint> indices;
         procesarNodo(escena->mRootNode, escena, posiciones, indices);
 
-        //Un OBJ no trae colores, así que pasamos un vector vacío
+        if (posiciones.empty()) {
+            throw std::runtime_error("El archivo '" + ruta + "' no contiene geometría");
+        }
+
+        //Normalización: buscamos la caja que encierra al modelo (mínimo y máximo en cada eje)
+        glm::vec3 minimo = posiciones[0];
+        glm::vec3 maximo = posiciones[0];
+        for (const glm::vec3& p : posiciones) {
+            minimo = glm::min(minimo, p);
+            maximo = glm::max(maximo, p);
+        }
+
+        //Lo centramos en el origen y lo escalamos para que su dimensión mayor mida 1.
+        //Los modelos descargados vienen en escalas muy distintas.
+        glm::vec3 centro = (minimo + maximo) * 0.5f;
+        glm::vec3 tamano = maximo - minimo;
+        float mayor = std::max({tamano.x, tamano.y, tamano.z});
+        if (mayor > 0.0f) {
+            for (glm::vec3& p : posiciones) {
+                p = (p - centro) / mayor;
+            }
+        }
+
+        // Un OBJ no trae colores, así que pasamos un vector vacío
         return Modelo(posiciones, std::vector<glm::vec3>{}, indices);
     }
 } // PAG
