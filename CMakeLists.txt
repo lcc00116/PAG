@@ -21,7 +21,15 @@ add_executable( ${PROJECT_NAME} ${MY_FILES}
         ShaderProgram.h
         MovimientoCamara.h
         Camera.cpp
-        Camera.h)
+        Camera.h
+        Modelo.cpp
+        Modelo.h)
+
+#Copia la carpeta de modelos al directorio de ejecución en cada compilación
+add_custom_target(copiar_modelos ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/modelos ${CMAKE_BINARY_DIR}/modelos)
+add_dependencies(${PROJECT_NAME} copiar_modelos)
 
 #Copia los shaders al directorio donde se ejecuta el programa
 configure_file(${CMAKE_SOURCE_DIR}/pag03-vs.glsl ${CMAKE_BINARY_DIR}/pag03-vs.glsl COPYONLY)
@@ -34,6 +42,6 @@ target_include_directories( ${PROJECT_NAME} PUBLIC GLAD/include
 find_package(OpenGL REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
+find_package(assimp CONFIG REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL glfw)
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL glfw glm::glm)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL glfw glm::glm assimp::assimp)

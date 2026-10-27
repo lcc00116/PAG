@@ -3,9 +3,11 @@
 
 #include <string>
 #include <glad/glad.h>
+#include <vector>
 #include "ShaderProgram.h"
 #include "Camera.h"
 #include "MovimientoCamara.h"
+#include "Modelo.h"
 
 namespace PAG {
     class Renderer {
@@ -13,10 +15,9 @@ namespace PAG {
         static Renderer* instancia;
         float _bgRed, _bgGreen, _bgBlue;
 
-        GLuint idVAO = 0;         // Identificador del vertex array object
-        GLuint idVBO = 0;         // Identificador del vertex buffer object
-        GLuint idIBO = 0;         // Identificador del index buffer object
-        GLuint idVBOColores = 0;  // Identificador del VBO de colores (versión no entrelazada)
+        std::vector<Modelo> _modelos;
+        bool _alambre = false;               //true = dibujar en malla de alambre
+        void anadirModelo(Modelo nuevo);     //Coloca y añade un modelo a la escena
 
         PAG::ShaderProgram _shaderProgram;
         Camera _camera;
@@ -35,6 +36,14 @@ namespace PAG {
         std::string consultarOpenGL();
         void creaShaderProgram(const std::string& nombreBase);
         void creaModelo();
+        void cargarModelo(const std::string& ruta);
+        void setAlambre(bool alambre) { _alambre = alambre; }
+        bool getAlambre() const { return _alambre; }
+        void eliminarModelo(std::size_t indice);
+        void trasladarModelo(std::size_t indice, float x, float y, float z);
+        void rotarModelo(std::size_t indice, float grados, const glm::vec3& eje);
+        void escalarModelo(std::size_t indice, float factor);
+        std::size_t numModelos() const {return _modelos.size();}
         void moverCamara(MovimientoCamara tipo, float a, float b = 0.0f);
         void arrastrarRaton(float dx, float dy);
         void moverPasoCamara(int dirX, int dirY);

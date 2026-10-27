@@ -7,6 +7,8 @@
 
 #include <string>
 #include <vector>
+#include <imgui.h>
+#include "imfilebrowser.h"
 
 struct GLFWwindow;
 
@@ -18,6 +20,8 @@ namespace PAG {
         float _bgColor[3];
         std::vector<std::string> _mensajes;
         std::string _nombreShader = "pag03";
+        ImGui::FileBrowser _selectorArchivo; //Ruta del OBJ que se quiere cargar
+        int _modeloSeleccionado = -1;   //Posición en la lista; -1 = ninguno
         bool _cargaShaderPendiente = false;
 
         GUI();

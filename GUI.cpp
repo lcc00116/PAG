@@ -10,6 +10,8 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_stdlib.h>
+#include <glm/glm.hpp>
+#include <exception>
 
 namespace PAG {
 
@@ -31,6 +33,8 @@ namespace PAG {
     void GUI::inicializar(GLFWwindow* window) {
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
+        _selectorArchivo.SetTitle("Select an OBJ model");
+        _selectorArchivo.SetTypeFilters({ ".obj" });
 
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init();
@@ -42,11 +46,13 @@ namespace PAG {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+
         //---------- Ventana "Fondo": selector de color ----------
 
         //Posición y tamaño iniciales (solo la primera vez que se abre)
         ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Once);
         ImGui::SetNextWindowSize(ImVec2(280, 380), ImGuiCond_Once);
+        ImGui::SetNextWindowCollapsed(true, ImGuiCond_Once);   //Empieza plegada
 
         //Crea la ventana; si está contraída, Begin devuelve false y no dibujamos nada dentro
         if (ImGui::Begin("Fondo")) {
@@ -60,10 +66,11 @@ namespace PAG {
         }
         ImGui::End(); //Siempre hay que llamarlo
 
+
         //---------- Ventana "Mensajes": histórico de mensajes ----------
 
-        ImGui::SetNextWindowPos(ImVec2(300, 10), ImGuiCond_Once);
-        ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_Once);
+        ImGui::SetNextWindowPos(ImVec2(10, 446), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(420, 120), ImGuiCond_Once);
 
         if (ImGui::Begin("Mensajes")) {
             ImGui::SetWindowFontScale(1.0f);
@@ -80,10 +87,11 @@ namespace PAG {
         }
         ImGui::End();
 
+
         //---------- Ventana "Shader Program": nombre base de los shaders ----------
 
-        ImGui::SetNextWindowPos(ImVec2(10, 400), ImGuiCond_Once);
-        ImGui::SetNextWindowSize(ImVec2(280, 120), ImGuiCond_Once);
+        ImGui::SetNextWindowPos(ImVec2(10, 50), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(280, 110), ImGuiCond_Once);
 
         if (ImGui::Begin("Shader Program")) {
             ImGui::SetWindowFontScale(1.5f);
@@ -95,10 +103,11 @@ namespace PAG {
         }
         ImGui::End();
 
+
         //---------- Ventana "Camera": movimiento de cámara ----------
 
-        ImGui::SetNextWindowPos(ImVec2(710, 340), ImGuiCond_Once);
-        ImGui::SetNextWindowSize(ImVec2(300, 260), ImGuiCond_Once);
+        ImGui::SetNextWindowPos(ImVec2(714, 390), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(300, 176), ImGuiCond_Once);
 
         if (ImGui::Begin("Camera")) {
             ImGui::SetWindowFontScale(1.5f);
@@ -167,6 +176,118 @@ namespace PAG {
                     ImGui::SameLine();
                     if (ImGui::Button("East ->"))   r.moverCamara(MovimientoCamara::Orbit, 0.0f, paso);
                     break;
+            }
+        }
+        ImGui::End();
+
+
+        //---------- Ventana "Models": añadir y eliminar modelos ----------
+
+        ImGui::SetNextWindowPos(ImVec2(714, 10), ImGuiCond_Once);
+        ImGui::SetNextWindowSize(ImVec2(300, 160), ImGuiCond_Once);
+
+        if (ImGui::Begin("Models")) {
+            ImGui::SetWindowFontScale(1.5f);
+            Renderer& r = Renderer::getInstancia();
+
+            if (ImGui::Button("Add triangle")) {
+                r.creaModelo();
+            }
+
+            //Botón que abre el selector de archivos
+            if (ImGui::Button("Load OBJ...")) {
+                _selectorArchivo.Open();
+            }
+
+            //Casilla para ver los modelos en malla de alambre
+            bool alambre = r.getAlambre();
+            if (ImGui::Checkbox("Wireframe", &alambre)) {
+                r.setAlambre(alambre);
+            }
+
+            ImGui::Separator();
+
+            //Una línea por modelo; al hacer clic en ella, queda seleccionado
+            for (std::size_t i = 0; i < r.numModelos(); ++i) {
+                std::string etiqueta = "Model " + std::to_string(i + 1);
+                if (ImGui::Selectable(etiqueta.c_str(), _modeloSeleccionado == static_cast<int>(i))) {
+                    _modeloSeleccionado = static_cast<int>(i);
+                }
+            }
+
+            ImGui::Separator();
+
+            if (ImGui::Button("Delete selected")) {
+                //Solo borramos si hay un modelo seleccionado y existe
+                if (_modeloSeleccionado >= 0 && _modeloSeleccionado < static_cast<int>(r.numModelos())) {
+                    r.eliminarModelo(static_cast<std::size_t>(_modeloSeleccionado));
+                    _modeloSeleccionado = -1;   //Ya no queda ninguno seleccionado
+                }
+            }
+        }
+        ImGui::End();
+
+        _selectorArchivo.Display();
+
+        if (_selectorArchivo.HasSelected()) {
+            std::string ruta = _selectorArchivo.GetSelected().string();
+            try {
+                Renderer::getInstancia().cargarModelo(ruta);
+                agregarMensaje("Modelo cargado: " + ruta);
+            } catch (const std::exception& e) {
+                agregarMensaje(e.what());
+            }
+            _selectorArchivo.ClearSelected();   //si no, volvería a cargarlo en cada frame
+        }
+
+
+        //---------- Ventana "Transform": transformar el modelo seleccionado ----------
+
+        ImGui::SetNextWindowPos(ImVec2(714, 180), ImGuiCond_Once);
+
+        if (ImGui::Begin("Transform", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+            ImGui::SetWindowFontScale(1.0f);
+            Renderer& r = Renderer::getInstancia();
+            const float desplaza = 0.1f;   //Unidades de escena por clic
+
+            //Solo se puede transformar si hay un modelo seleccionado y existe
+            if (_modeloSeleccionado < 0 || _modeloSeleccionado >= static_cast<int>(r.numModelos())) {
+                ImGui::Text("Select a model first");
+            } else {
+                std::size_t i = static_cast<std::size_t>(_modeloSeleccionado);
+                ImGui::Text("Model %d", _modeloSeleccionado + 1);
+
+                ImGui::Text("Move");
+                if (ImGui::Button("- X")) r.trasladarModelo(i, -desplaza, 0.0f, 0.0f);
+                ImGui::SameLine();
+                if (ImGui::Button("+ X")) r.trasladarModelo(i,  desplaza, 0.0f, 0.0f);
+                ImGui::SameLine();
+                if (ImGui::Button("- Y")) r.trasladarModelo(i, 0.0f, -desplaza, 0.0f);
+                ImGui::SameLine();
+                if (ImGui::Button("+ Y")) r.trasladarModelo(i, 0.0f,  desplaza, 0.0f);
+                ImGui::SameLine();
+                if (ImGui::Button("- Z")) r.trasladarModelo(i, 0.0f, 0.0f, -desplaza);
+                ImGui::SameLine();
+                if (ImGui::Button("+ Z")) r.trasladarModelo(i, 0.0f, 0.0f,  desplaza);
+
+                const float gira = 10.0f;   //Grados por clic
+                ImGui::Text("Rotate");
+                if (ImGui::Button("- RX")) r.rotarModelo(i, -gira, glm::vec3(1.0f, 0.0f, 0.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("+ RX")) r.rotarModelo(i,  gira, glm::vec3(1.0f, 0.0f, 0.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("- RY")) r.rotarModelo(i, -gira, glm::vec3(0.0f, 1.0f, 0.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("+ RY")) r.rotarModelo(i,  gira, glm::vec3(0.0f, 1.0f, 0.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("- RZ")) r.rotarModelo(i, -gira, glm::vec3(0.0f, 0.0f, 1.0f));
+                ImGui::SameLine();
+                if (ImGui::Button("+ RZ")) r.rotarModelo(i,  gira, glm::vec3(0.0f, 0.0f, 1.0f));
+
+                ImGui::Text("Scale");
+                if (ImGui::Button("Smaller")) r.escalarModelo(i, 0.9f);
+                ImGui::SameLine();
+                if (ImGui::Button("Bigger"))  r.escalarModelo(i, 1.1f);
             }
         }
         ImGui::End();

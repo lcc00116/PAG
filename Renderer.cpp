@@ -1,9 +1,20 @@
 #include "Renderer.h"
 
+#include <cstdlib>
+#include <utility>
+#include <glm/gtc/matrix_transform.hpp>
+#include <stdexcept>
 #include "glad/glad.h"
 
 namespace PAG {
     Renderer* Renderer::instancia = nullptr;
+
+    namespace {
+        // Devuelve un número aleatorio entre min y max
+        float aleatorio(float min, float max) {
+            return min + (max - min) * static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
+        }
+    }
 
     //Constructor por defecto
     Renderer::Renderer() {
@@ -11,21 +22,7 @@ namespace PAG {
 
     //Destructor
     Renderer::~Renderer() {
-        // ShaderProgram se destruye solo (es un atributo por valor, no un puntero);
-        // su propio destructor libera idVS, idFS e idSP.
-        // Aquí solo liberamos lo que sigue gestionando Renderer directamente.
-        if (idVBO != 0) {
-            glDeleteBuffers(1, &idVBO);
-        }
-        if (idIBO != 0) {
-            glDeleteBuffers(1, &idIBO);
-        }
-        if (idVAO != 0) {
-            glDeleteVertexArrays(1, &idVAO);
-        }
-        if (idVBOColores != 0) {
-            glDeleteBuffers(1, &idVBOColores);
-        }
+
     }
 
     //Consulta el objeto único de la clase y devuelve su dirección de memoria
@@ -45,18 +42,23 @@ namespace PAG {
     void Renderer::refrescar() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        if (_shaderProgram.getId() == 0 || idVAO == 0) {
+        if (_shaderProgram.getId() == 0 || _modelos.empty()) {
             return;
         }
 
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glPolygonMode(GL_FRONT_AND_BACK, _alambre ? GL_LINE : GL_FILL);
 
         _shaderProgram.usar();
-        _shaderProgram.setUniform("mModelViewProj", _camera.matrizProyeccion() * _camera.matrizVision());
-        glBindVertexArray(idVAO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
 
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+        // Lo común a todos los modelos: proyección y visión de la cámara
+        glm::mat4 proyeccionVision = _camera.matrizProyeccion() * _camera.matrizVision();
+
+        for (const Modelo& modelo : _modelos) {
+            // Cada modelo tiene su propia transformación de modelado
+            _shaderProgram.setUniform("mModelViewProj",
+                                      proyeccionVision * modelo.getMatrizModelado());
+            modelo.dibujar();
+        }
     }
 
     //Cambio del tamaño de la ventana
@@ -97,36 +99,25 @@ namespace PAG {
         _shaderProgram = std::move(nuevo);  // solo llega aquí si todo ha ido bien
     }
 
+    void Renderer::anadirModelo(Modelo nuevo) {
+        // El primer modelo se queda en el centro; los demás se reparten por la escena
+        if (!_modelos.empty()) {
+            glm::vec3 posicion(aleatorio(-1.0f, 1.0f),    // x
+                               aleatorio(-0.2f, 0.2f),    // y
+                               aleatorio(-1.0f, 0.0f));   // z
+            nuevo.setMatrizModelado(glm::translate(glm::mat4(1.0f), posicion));
+        }
+
+        _modelos.push_back(std::move(nuevo));
+    }
+
     void Renderer::creaModelo() {
-        GLfloat vertices[] = { -0.5f, -0.5f, 0.0f,
-                                0.5f, -0.5f, 0.0f,
-                                0.0f,  0.5f, 0.0f };
-        GLuint indices[] = { 0, 1, 2 };
+        anadirModelo(Modelo::triangulo());
+    }
 
-        GLfloat colores[] = { 1.0f, 0.0f, 0.0f,
-                               0.0f, 1.0f, 0.0f,
-                               0.0f, 0.0f, 1.0f };
-
-        glGenVertexArrays(1, &idVAO);
-        glBindVertexArray(idVAO);
-
-        glGenBuffers(1, &idVBO);
-        glBindBuffer(GL_ARRAY_BUFFER, idVBO);
-        glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-        glEnableVertexAttribArray(0);
-
-        glGenBuffers(1, &idVBOColores);
-        glBindBuffer(GL_ARRAY_BUFFER, idVBOColores);
-        glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), colores, GL_STATIC_DRAW);
-
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-        glEnableVertexAttribArray(1);
-
-        glGenBuffers(1, &idIBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), indices, GL_STATIC_DRAW);
+    void Renderer::cargarModelo(const std::string& ruta) {
+        // Si la carga falla, desdeArchivo lanza una excepción y no se añade nada
+        anadirModelo(Modelo::desdeArchivo(ruta));
     }
 
     void Renderer::moverCamara(MovimientoCamara tipo, float a, float b) {
@@ -166,6 +157,38 @@ namespace PAG {
             case MovimientoCamara::Orbit: moverCamara(_movimiento, dirY * paso, dirX * paso); break;
             case MovimientoCamara::Zoom:  moverCamara(_movimiento, -dirY * paso); break;
         }
+    }
+
+    void Renderer::eliminarModelo(std::size_t indice) {
+        if (indice >= _modelos.size()) {
+            throw std::out_of_range("No existe ese modelo");
+        }
+        _modelos.erase(_modelos.begin() + indice);
+    }
+
+    void Renderer::trasladarModelo(std::size_t indice, float x, float y, float z) {
+        Modelo& modelo = _modelos.at(indice);   //Lanza std::out_of_range si no existe
+
+        //La traslación va a la IZQUIERDA de la matriz actual, así que se mueve
+        //según los ejes de la escena, y no según los del modelo
+        modelo.setMatrizModelado(glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z))
+                                 * modelo.getMatrizModelado());
+    }
+
+    void Renderer::rotarModelo(std::size_t indice, float grados, const glm::vec3& eje) {
+        Modelo& modelo = _modelos.at(indice);
+
+        //glm::rotate(m, ...) calcula m * rotación: la rotación se aplica ANTES de
+        //colocar el modelo, así que gira sobre sí mismo y no alrededor del origen
+        modelo.setMatrizModelado(glm::rotate(modelo.getMatrizModelado(),
+                                             glm::radians(grados), eje));
+    }
+
+    void Renderer::escalarModelo(std::size_t indice, float factor) {
+        Modelo& modelo = _modelos.at(indice);
+
+        //Igual que la rotación: m * escalado, así que crece o encoge sobre su propio centro
+        modelo.setMatrizModelado(glm::scale(modelo.getMatrizModelado(), glm::vec3(factor)));
     }
 
 } // PAG
