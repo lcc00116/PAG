@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1900"
+   height="1154"
+   viewBox="0 0 1900 1154"
+   version="1.1"
+   id="svg123"
+   sodipodi:docname="pag06.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:c2pa="http://c2pa.org/manifest">
+  <sodipodi:namedview
+     id="namedview123"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.34965338"
+     inkscape:cx="281.70756"
+     inkscape:cy="358.92689"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg123" />
+  <metadata
+     id="metadata1">
+    <c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTpkYmZmMGEzMy1hYTBjLTQ2MWYtOTZlMi0xMmI2OTU0ZmVjNGIAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaL3zhwHRBC2pO49X5UuM8rwAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDowMGU1ODQ1OC1kMDkwLTRhOGMtYmZlYS02YzQ3NGI3MWQ4NzJscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNo9yG+hseGReibO2ntBqSQjwAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggKIuxUWRWWaSY1ssDWdQ9/tMFlxJwfM7Gu0SXHwW51RikZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaOVEPtbbLDG+g5ZM/6UQvloAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCDgsNiF2DMfFP3aNMj0F2xNPJz28F2ACW8MStFLlK9VNmRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBiaZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmRiZmYwYTMzLWFhMGMtNDYxZi05NmUyLTEyYjY5NTRmZWM0Yi9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmFkMGEwNWM4LTVhNGYtNDA5MC1iNWNmLWYxMzhhNmY5Mzg2ZHJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCAoi7FRZFZZpJjWywNZ1D3+0wWXEnB8zsa7RJcfBbnVGKJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFgg3AUP5NbIdOGprA+kx2B1VxWYx1qD55H3poQI9sizTLCiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggdXrVOi5HTnT5uY7DUNA7IMe87oXYkD2CrQMMnfkW9t50Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQOECGEZF41uiPNK/Y5b6zmbvWceB8X1OG04cMA8Wj5pT5mllaEg0gSOVFXF9Xxbe+HniTTBVVc1hZ3aCAgTUK44=</c2pa:manifest>
+  </metadata>
+  <defs
+     id="defs2">
+    <marker
+       id="open"
+       viewBox="0 0 10 10"
+       refX="10"
+       refY="5"
+       markerWidth="10"
+       markerHeight="10"
+       markerUnits="userSpaceOnUse"
+       orient="auto">
+      <path
+         d="M0,0 L10,5 L0,10"
+         fill="none"
+         stroke="#222"
+         stroke-width="1.5"
+         id="path1" />
+    </marker>
+    <marker
+       id="diamond"
+       viewBox="0 0 16 10"
+       refX="16"
+       refY="5"
+       markerWidth="16"
+       markerHeight="10"
+       markerUnits="userSpaceOnUse"
+       orient="auto-start-reverse">
+      <path
+         d="M0,5 L8,0 L16,5 L8,10 Z"
+         fill="#222"
+         stroke="#222"
+         id="path2" />
+    </marker>
+  </defs>
+  <style
+     id="style2">
+text { font-family: Consolas, &quot;DejaVu Sans Mono&quot;, monospace; fill: #111; }
+.title { font-size: 14px; font-weight: bold; }
+.st { font-size: 11px; }
+.m { font-size: 12px; }
+.h { font-size: 18px; font-weight: bold; }
+</style>
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.325"
+     id="rect1"
+     width="2039.1624"
+     height="1332.7484"
+     x="-77.21933"
+     y="-85.799255" />
+  <text
+     x="20"
+     y="35"
+     class="h"
+     id="text2">Práctica 6 - Diagrama UML</text>
+  <line
+     x1="830"
+     y1="40"
+     x2="900"
+     y2="40"
+     stroke="#222"
+     stroke-width="1.5"
+     stroke-dasharray="6 4"
+     marker-end="url(#open)"
+     id="line2" />
+  <line
+     x1="689.03833"
+     y1="28.269764"
+     x2="594.987"
+     y2="120.27544"
+     stroke="#222222"
+     stroke-width="1.14401"
+     stroke-dasharray="6, 4"
+     marker-end="url(#open)"
+     id="line3" />
+  <line
+     x1="781.40253"
+     y1="36.229748"
+     x2="861.54413"
+     y2="119.42847"
+     stroke="#222222"
+     stroke-width="1.01254"
+     stroke-dasharray="6, 4"
+     marker-end="url(#open)"
+     id="line4" />
+  <line
+     x1="240"
+     y1="182"
+     x2="180"
+     y2="182"
+     stroke="#222"
+     stroke-width="1.5"
+     stroke-dasharray="6 4"
+     marker-end="url(#open)"
+     id="line5" />
+  <line
+     x1="660"
+     y1="320"
+     x2="740"
+     y2="320"
+     stroke="#222"
+     stroke-width="1.5"
+     stroke-dasharray="6 4"
+     marker-end="url(#open)"
+     id="line6" />
+  <line
+     x1="1210"
+     y1="182"
+     x2="1300"
+     y2="182"
+     stroke="#222"
+     stroke-width="1.5"
+     stroke-dasharray="6 4"
+     marker-end="url(#open)"
+     id="line7" />
+  <line
+     x1="385"
+     y1="444"
+     x2="385"
+     y2="742"
+     stroke="#222"
+     stroke-width="1.5"
+     marker-start="url(#diamond)"
+     id="line8" />
+  <text
+     x="392"
+     y="734"
+     class="m"
+     id="text8">1</text>
+  <line
+     x1="560"
+     y1="444"
+     x2="660"
+     y2="742"
+     stroke="#222"
+     stroke-width="1.5"
+     stroke-dasharray="6 4"
+     marker-end="url(#open)"
+     id="line9" />
+  <line
+     x1="790"
+     y1="652"
+     x2="730"
+     y2="742"
+     stroke="#222"
+     stroke-width="1.5"
+     stroke-dasharray="6 4"
+     marker-end="url(#open)"
+     id="line10" />
+  <line
+     x1="917.24866"
+     y1="651.54486"
+     x2="917.59473"
+     y2="755.45538"
+     stroke="#222222"
+     stroke-width="1.42649"
+     marker-start="url(#diamond)"
+     id="line11" />
+  <text
+     x="962"
+     y="734"
+     class="m"
+     id="text11">1</text>
+  <line
+     x1="1156.8722"
+     y1="652.13196"
+     x2="1222.1167"
+     y2="754.75427"
+     stroke="#222222"
+     stroke-width="0.749469"
+     marker-start="url(#diamond)"
+     id="line12" />
+  <text
+     x="1307"
+     y="734"
+     class="m"
+     id="text12">1</text>
+  <line
+     x1="1209.1937"
+     y1="522.18939"
+     x2="1636.215"
+     y2="748.85626"
+     stroke="#222222"
+     stroke-width="1.5"
+     marker-start="url(#diamond)"
+     id="line13"
+     inkscape:transform-center-x="14.625047"
+     inkscape:transform-center-y="10.936436" />
+  <text
+     x="1662"
+     y="734"
+     class="m"
+     id="text13">0..*</text>
+  <line
+     x1="1760"
+     y1="742"
+     x2="1400"
+     y2="204"
+     stroke="#222"
+     stroke-width="1.5"
+     stroke-dasharray="6 4"
+     marker-end="url(#open)"
+     id="line14" />
+  <line
+     x1="1655"
+     y1="1020"
+     x2="1655"
+     y2="1080"
+     stroke="#222"
+     stroke-width="1.5"
+     stroke-dasharray="6 4"
+     marker-end="url(#open)"
+     id="line15" />
+  <rect
+     x="240"
+     y="120"
+     width="420"
+     height="324"
+     fill="#fff"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect15" />
+  <text
+     x="450.0"
+     y="136"
+     text-anchor="middle"
+     class="st"
+     id="text15">«singleton»</text>
+  <text
+     x="450.0"
+     y="153"
+     text-anchor="middle"
+     class="title"
+     id="text16">PAG::GUI</text>
+  <line
+     x1="240"
+     y1="164"
+     x2="660"
+     y2="164"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line16" />
+  <line
+     x1="240"
+     y1="288"
+     x2="660"
+     y2="288"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line17" />
+  <text
+     x="248"
+     y="182"
+     class="m"
+     id="text17">-instancia: GUI* {static}</text>
+  <text
+     x="248"
+     y="198"
+     class="m"
+     id="text18">-_bgColor: float[3]</text>
+  <text
+     x="248"
+     y="214"
+     class="m"
+     id="text19">-_mensajes: vector&lt;string&gt;</text>
+  <text
+     x="248"
+     y="230"
+     class="m"
+     id="text20">-_nombreShader: string</text>
+  <text
+     x="248"
+     y="246"
+     class="m"
+     id="text21">-_modeloSeleccionado: int</text>
+  <text
+     x="248"
+     y="262"
+     class="m"
+     id="text22">-_cargaShaderPendiente: bool</text>
+  <text
+     x="248"
+     y="278"
+     class="m"
+     id="text23">-_selectorArchivo: FileBrowser</text>
+  <text
+     x="248"
+     y="306"
+     class="m"
+     id="text24">+getInstancia(): GUI&amp; {static}</text>
+  <text
+     x="248"
+     y="322"
+     class="m"
+     id="text25">+inicializar(window): void</text>
+  <text
+     x="248"
+     y="338"
+     class="m"
+     id="text26">+refrescar(): void</text>
+  <text
+     x="248"
+     y="354"
+     class="m"
+     id="text27">+liberar(): void</text>
+  <text
+     x="248"
+     y="370"
+     class="m"
+     id="text28">+notificarBotonRaton(boton, pulsado): void</text>
+  <text
+     x="248"
+     y="386"
+     class="m"
+     id="text29">+agregarMensaje(mensaje): void</text>
+  <text
+     x="248"
+     y="402"
+     class="m"
+     id="text30">+capturaTeclado(): bool</text>
+  <text
+     x="248"
+     y="418"
+     class="m"
+     id="text31">+capturaRaton(): bool</text>
+  <text
+     x="248"
+     y="434"
+     class="m"
+     id="text32">+consumirPeticionShader(nombre): bool</text>
+  <rect
+     x="740"
+     y="120"
+     width="470"
+     height="532"
+     fill="#fff"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect32" />
+  <text
+     x="975.0"
+     y="136"
+     text-anchor="middle"
+     class="st"
+     id="text33">«singleton»</text>
+  <text
+     x="973.21252"
+     y="150.49753"
+     text-anchor="middle"
+     class="title"
+     id="text34">PAG::Renderer</text>
+  <line
+     x1="740"
+     y1="164"
+     x2="1210"
+     y2="164"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line34" />
+  <line
+     x1="740"
+     y1="288"
+     x2="1210"
+     y2="288"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line35" />
+  <text
+     x="748"
+     y="182"
+     class="m"
+     id="text35">-instancia: Renderer* {static}</text>
+  <text
+     x="748"
+     y="198"
+     class="m"
+     id="text36">-_bgRed, _bgGreen, _bgBlue: float</text>
+  <text
+     x="748"
+     y="214"
+     class="m"
+     id="text37">-_modelos: vector&lt;Modelo&gt;</text>
+  <text
+     x="748"
+     y="230"
+     class="m"
+     id="text38">-_alambre: bool</text>
+  <text
+     x="748"
+     y="246"
+     class="m"
+     id="text39">-_shaderProgram: ShaderProgram</text>
+  <text
+     x="748"
+     y="262"
+     class="m"
+     id="text40">-_camera: Camera</text>
+  <text
+     x="748"
+     y="278"
+     class="m"
+     id="text41">-_movimiento: MovimientoCamara</text>
+  <text
+     x="748"
+     y="306"
+     class="m"
+     id="text42">+getInstancia(): Renderer&amp; {static}</text>
+  <text
+     x="748"
+     y="322"
+     class="m"
+     id="text43">+destruyeInstancia(): void {static}</text>
+  <text
+     x="748"
+     y="338"
+     class="m"
+     id="text44">+refrescar(): void</text>
+  <text
+     x="748"
+     y="354"
+     class="m"
+     id="text45">+redimensionar(width, height): void</text>
+  <text
+     x="748"
+     y="370"
+     class="m"
+     id="text46">+cambiarColorFondo(r, g, b): void</text>
+  <text
+     x="748"
+     y="386"
+     class="m"
+     id="text47">+inicializarOpenGL(): void</text>
+  <text
+     x="748"
+     y="402"
+     class="m"
+     id="text48">+consultarOpenGL(): string</text>
+  <text
+     x="748"
+     y="418"
+     class="m"
+     id="text49">+creaShaderProgram(nombreBase): void</text>
+  <text
+     x="748"
+     y="434"
+     class="m"
+     id="text50">+creaModelo(): void</text>
+  <text
+     x="748"
+     y="450"
+     class="m"
+     id="text51">+cargarModelo(ruta): void</text>
+  <text
+     x="748"
+     y="466"
+     class="m"
+     id="text52">+eliminarModelo(indice): void</text>
+  <text
+     x="748"
+     y="482"
+     class="m"
+     id="text53">+trasladarModelo(indice, x, y, z): void</text>
+  <text
+     x="748"
+     y="498"
+     class="m"
+     id="text54">+rotarModelo(indice, grados, eje): void</text>
+  <text
+     x="748"
+     y="514"
+     class="m"
+     id="text55">+escalarModelo(indice, factor): void</text>
+  <text
+     x="748"
+     y="530"
+     class="m"
+     id="text56">+numModelos(): size_t</text>
+  <text
+     x="748"
+     y="546"
+     class="m"
+     id="text57">+setAlambre(alambre) / getAlambre()</text>
+  <text
+     x="748"
+     y="562"
+     class="m"
+     id="text58">+moverCamara(tipo, a, b): void</text>
+  <text
+     x="748"
+     y="578"
+     class="m"
+     id="text59">+arrastrarRaton(dx, dy): void</text>
+  <text
+     x="748"
+     y="594"
+     class="m"
+     id="text60">+moverPasoCamara(dirX, dirY): void</text>
+  <text
+     x="748"
+     y="610"
+     class="m"
+     id="text61">+seleccionarMovimiento(m) / getMovimiento()</text>
+  <text
+     x="748"
+     y="626"
+     class="m"
+     id="text62">+getFovCamara() / setFovCamara(grados)</text>
+  <text
+     x="748"
+     y="642"
+     class="m"
+     id="text63">-anadirModelo(nuevo: Modelo): void</text>
+  <rect
+     x="240"
+     y="742"
+     width="290"
+     height="180"
+     fill="#fff"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect63" />
+  <text
+     x="385.0"
+     y="758"
+     text-anchor="middle"
+     class="st"
+     id="text64">«imfilebrowser.h»</text>
+  <text
+     x="385.0"
+     y="775"
+     text-anchor="middle"
+     class="title"
+     id="text65">ImGui::FileBrowser</text>
+  <line
+     x1="240"
+     y1="786"
+     x2="530"
+     y2="786"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line65" />
+  <line
+     x1="240"
+     y1="798"
+     x2="530"
+     y2="798"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line66" />
+  <text
+     x="248"
+     y="816"
+     class="m"
+     id="text66">+Open(): void</text>
+  <text
+     x="248"
+     y="832"
+     class="m"
+     id="text67">+Display(): void</text>
+  <text
+     x="248"
+     y="848"
+     class="m"
+     id="text68">+HasSelected(): bool</text>
+  <text
+     x="248"
+     y="864"
+     class="m"
+     id="text69">+GetSelected(): path</text>
+  <text
+     x="248"
+     y="880"
+     class="m"
+     id="text70">+ClearSelected(): void</text>
+  <text
+     x="248"
+     y="896"
+     class="m"
+     id="text71">+SetTitle(titulo): void</text>
+  <text
+     x="248"
+     y="912"
+     class="m"
+     id="text72">+SetTypeFilters(filtros): void</text>
+  <rect
+     x="560"
+     y="742"
+     width="200"
+     height="164"
+     fill="#fff"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect72" />
+  <text
+     x="660.0"
+     y="758"
+     text-anchor="middle"
+     class="st"
+     id="text73">«enumeration»</text>
+  <text
+     x="660.0"
+     y="775"
+     text-anchor="middle"
+     class="title"
+     id="text74">MovimientoCamara</text>
+  <line
+     x1="560"
+     y1="786"
+     x2="760"
+     y2="786"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line74" />
+  <line
+     x1="560"
+     y1="894"
+     x2="760"
+     y2="894"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line75" />
+  <text
+     x="568"
+     y="804"
+     class="m"
+     id="text75">Pan</text>
+  <text
+     x="568"
+     y="820"
+     class="m"
+     id="text76">Tilt</text>
+  <text
+     x="568"
+     y="836"
+     class="m"
+     id="text77">Dolly</text>
+  <text
+     x="568"
+     y="852"
+     class="m"
+     id="text78">Crane</text>
+  <text
+     x="568"
+     y="868"
+     class="m"
+     id="text79">Orbit</text>
+  <text
+     x="568"
+     y="884"
+     class="m"
+     id="text80">Zoom</text>
+  <rect
+     x="790"
+     y="742"
+     width="330"
+     height="294"
+     fill="#fff"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect80" />
+  <text
+     x="955.0"
+     y="762"
+     text-anchor="middle"
+     class="title"
+     id="text81">PAG::Camera</text>
+  <line
+     x1="790"
+     y1="772"
+     x2="1120"
+     y2="772"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line81" />
+  <line
+     x1="790"
+     y1="864"
+     x2="1120"
+     y2="864"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line82" />
+  <text
+     x="798"
+     y="790"
+     class="m"
+     id="text82">-posicion: vec3</text>
+  <text
+     x="798"
+     y="806"
+     class="m"
+     id="text83">-puntoMira: vec3</text>
+  <text
+     x="798"
+     y="822"
+     class="m"
+     id="text84">-fovX: float</text>
+  <text
+     x="798"
+     y="838"
+     class="m"
+     id="text85">-zNear, zFar: float</text>
+  <text
+     x="798"
+     y="854"
+     class="m"
+     id="text86">-viewport: ancho, alto</text>
+  <text
+     x="798"
+     y="882"
+     class="m"
+     id="text87">+pan(grados): void</text>
+  <text
+     x="798"
+     y="898"
+     class="m"
+     id="text88">+tilt(grados): void</text>
+  <text
+     x="798"
+     y="914"
+     class="m"
+     id="text89">+dolly(derecha, adelante): void</text>
+  <text
+     x="798"
+     y="930"
+     class="m"
+     id="text90">+crane(unidades): void</text>
+  <text
+     x="798"
+     y="946"
+     class="m"
+     id="text91">+orbit(latitud, longitud): void</text>
+  <text
+     x="798"
+     y="962"
+     class="m"
+     id="text92">+zoom(grados): void</text>
+  <text
+     x="798"
+     y="978"
+     class="m"
+     id="text93">+matrizVision(): mat4</text>
+  <text
+     x="798"
+     y="994"
+     class="m"
+     id="text94">+matrizProyeccion(): mat4</text>
+  <text
+     x="798"
+     y="1010"
+     class="m"
+     id="text95">+setViewport(ancho, alto): void</text>
+  <text
+     x="798"
+     y="1026"
+     class="m"
+     id="text96">+getFovX() / setFovX(grados)</text>
+  <rect
+     x="1150"
+     y="742"
+     width="300"
+     height="150"
+     fill="#fff"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect96" />
+  <text
+     x="1300.0"
+     y="762"
+     text-anchor="middle"
+     class="title"
+     id="text97">PAG::ShaderProgram</text>
+  <line
+     x1="1150"
+     y1="772"
+     x2="1450"
+     y2="772"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line97" />
+  <line
+     x1="1150"
+     y1="800"
+     x2="1450"
+     y2="800"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line98" />
+  <text
+     x="1158"
+     y="790"
+     class="m"
+     id="text98">-idPrograma: GLuint</text>
+  <text
+     x="1158"
+     y="818"
+     class="m"
+     id="text99">+crear(nombreBase): void</text>
+  <text
+     x="1158"
+     y="834"
+     class="m"
+     id="text100">+usar(): void</text>
+  <text
+     x="1158"
+     y="850"
+     class="m"
+     id="text101">+getId(): GLuint</text>
+  <text
+     x="1158"
+     y="866"
+     class="m"
+     id="text102">+setUniform(nombre, matriz): void</text>
+  <text
+     x="1158"
+     y="882"
+     class="m"
+     id="text103">+~ShaderProgram()</text>
+  <rect
+     x="1480"
+     y="742"
+     width="350"
+     height="278"
+     fill="#fff"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect103" />
+  <text
+     x="1655.0"
+     y="762"
+     text-anchor="middle"
+     class="title"
+     id="text104">PAG::Modelo</text>
+  <line
+     x1="1480"
+     y1="772"
+     x2="1830"
+     y2="772"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line104" />
+  <line
+     x1="1480"
+     y1="880"
+     x2="1830"
+     y2="880"
+     stroke="#222"
+     stroke-width="1.5"
+     id="line105" />
+  <text
+     x="1488"
+     y="790"
+     class="m"
+     id="text105">-idVAO: GLuint</text>
+  <text
+     x="1488"
+     y="806"
+     class="m"
+     id="text106">-idVBO: GLuint</text>
+  <text
+     x="1488"
+     y="822"
+     class="m"
+     id="text107">-idVBOColores: GLuint</text>
+  <text
+     x="1488"
+     y="838"
+     class="m"
+     id="text108">-idIBO: GLuint</text>
+  <text
+     x="1488"
+     y="854"
+     class="m"
+     id="text109">-numIndices: GLsizei</text>
+  <text
+     x="1488"
+     y="870"
+     class="m"
+     id="text110">-_matrizModelado: glm::mat4</text>
+  <text
+     x="1488"
+     y="898"
+     class="m"
+     id="text111">+Modelo(posiciones, colores, indices)</text>
+  <text
+     x="1488"
+     y="914"
+     class="m"
+     id="text112">+~Modelo()</text>
+  <text
+     x="1488"
+     y="930"
+     class="m"
+     id="text113">+Modelo(Modelo&amp;&amp;) / operator=(Modelo&amp;&amp;)</text>
+  <text
+     x="1488"
+     y="946"
+     class="m"
+     id="text114">+triangulo(): Modelo {static}</text>
+  <text
+     x="1488"
+     y="962"
+     class="m"
+     id="text115">+desdeArchivo(ruta): Modelo {static}</text>
+  <text
+     x="1488"
+     y="978"
+     class="m"
+     id="text116">+dibujar(): void</text>
+  <text
+     x="1488"
+     y="994"
+     class="m"
+     id="text117">+getMatrizModelado(): mat4</text>
+  <text
+     x="1488"
+     y="1010"
+     class="m"
+     id="text118">+setMatrizModelado(m): void</text>
+  <rect
+     x="630"
+     y="20"
+     width="200"
+     height="40"
+     rx="9"
+     fill="#f3f3f3"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect118" />
+  <text
+     x="730.0"
+     y="45.0"
+     text-anchor="middle"
+     class="title"
+     id="text119">main.cpp</text>
+  <rect
+     x="900"
+     y="20"
+     width="150"
+     height="40"
+     rx="9"
+     fill="#f3f3f3"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect119" />
+  <text
+     x="975.0"
+     y="45.0"
+     text-anchor="middle"
+     class="title"
+     id="text120">GLFW</text>
+  <rect
+     x="20"
+     y="160"
+     width="160"
+     height="44"
+     rx="9"
+     fill="#f3f3f3"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect120" />
+  <text
+     x="100.0"
+     y="187.0"
+     text-anchor="middle"
+     class="title"
+     id="text121">Dear ImGui</text>
+  <rect
+     x="1300"
+     y="160"
+     width="150"
+     height="44"
+     rx="9"
+     fill="#f3f3f3"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect121" />
+  <text
+     x="1375.0"
+     y="187.0"
+     text-anchor="middle"
+     class="title"
+     id="text122">OpenGL</text>
+  <rect
+     x="1555"
+     y="1080"
+     width="200"
+     height="44"
+     rx="9"
+     fill="#f3f3f3"
+     stroke="#222"
+     stroke-width="1.5"
+     id="rect122" />
+  <text
+     x="1655.0"
+     y="1107.0"
+     text-anchor="middle"
+     class="title"
+     id="text123">Assimp</text>
+</svg>

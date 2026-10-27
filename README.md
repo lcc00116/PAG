@@ -183,3 +183,58 @@ controlan con el ratón, el teclado y una ventana de ImGui.
    | Zoom       | - | acerca / aleja |
 
 4. La rueda del ratón sigue cambiando el color de fondo.
+
+
+# Práctica 6 - Lucía Cano Cubillo
+En esta práctica se ha sacado la geometría de `PAG::Renderer` a una nueva
+clase `PAG::Modelo`, para tener varios modelos en la escena, cada uno con su
+transformación de modelado, y cargar archivos OBJ con Assimp.
+
+![Diagrama UML](img/pag06.svg)
+
+## Cambios realizados
+
+- **Nueva clase `PAG::Modelo`:** guarda la geometría y la topología de un
+  objeto, crea y libera su VAO, y se dibuja a sí misma. Guarda su matriz de
+  modelado. `Modelo::desdeArchivo(ruta)` carga un OBJ con Assimp.
+- **`PAG::Renderer`:** guarda un `std::vector<Modelo>`. Para cada modelo envía
+  al shader `proyección * visión * modelado` (uniform `mModelViewProj`) y lo
+  dibuja. Permite cargar, eliminar y transformar modelos.
+- **`PAG::GUI`:** ventana "Models" (añadir triángulo, cargar OBJ con un
+  selector de archivos, modo alambre, lista y eliminación de modelos) y
+  ventana "Transform" (trasladar, rotar y escalar el modelo seleccionado).
+  El selector es `ImGui::FileBrowser` (`imfilebrowser.h`), filtrado a `.obj`.
+- **`CMakeLists.txt`:** se añade Assimp y se copia la carpeta `modelos`.
+
+## Decisiones de diseño
+
+- **`Modelo` no se copia, solo se mueve**, para no liberar dos veces los
+  buffers de OpenGL. Es necesario porque se guardan en un `std::vector`.
+- **Un único VAO por modelo, sin clase `Malla`:** se recorren los nodos de
+  Assimp y se juntan todas las mallas, desplazando sus índices.
+- **Flags de Assimp:** `JoinIdenticalVertices`, `Triangulate` y
+  `GenSmoothNormals`. Los materiales se ignoran.
+- **Normalización:** cada modelo se centra en el origen y se escala para que
+  su dimensión mayor mida 1.
+- **Errores con excepciones:** `Modelo` y `Renderer` las lanzan y solo `GUI`
+  las muestra en la ventana de Mensajes. Si la carga falla, no se añade nada.
+- **Transformaciones:** la traslación se aplica según los ejes de la escena;
+  la rotación y el escalado, sobre el propio modelo.
+- **Colocación:** el primer modelo va al origen y los demás en posiciones
+  aleatorias dentro de un intervalo visible.
+- **Alambre:** sin luces, los OBJ se verían planos, así que se puede activar
+  `GL_LINE`.
+- **Liberación:** `Renderer::destruyeInstancia()` se llama antes de destruir
+  la ventana, con el contexto OpenGL aún vivo.
+
+## Instrucciones de uso
+
+1. Pulsa "Load" en "Shader Program" (en nuestro caso, el Shader Program es `pag03`).
+2. En "Models", pulsa "Add triangle" o "Load OBJ...". En el caso de la segunda opción, elige un `.obj` (hay algunos en `modelos`). Haz clic en un modelo de la lista para seleccionarlo. "Delete selected" lo elimina.
+3. En "Transform", mueve, rota o escala el modelo seleccionado.
+
+## Nota sobre dependencias
+
+Assimp no se incluye en el repositorio: hay que instalarlo (vcpkg en
+Windows; `libassimp-dev` o similar en GNU/Linux y MacOS). La cabecera
+`imfilebrowser.h` sí se incluye.
