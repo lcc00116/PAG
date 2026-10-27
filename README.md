@@ -233,6 +233,8 @@ transformación de modelado, y cargar archivos OBJ con Assimp.
 2. En "Models", pulsa "Add triangle" o "Load OBJ...". En el caso de la segunda opción, elige un `.obj` (hay algunos en `modelos`). Haz clic en un modelo de la lista para seleccionarlo. "Delete selected" lo elimina.
 3. En "Transform", mueve, rota o escala el modelo seleccionado.
 
+**Nota**: Algunos de los modelos no están presentes en Platea. Estos han sido descargados de la página `open3dmodels.com/es`
+
 ## Nota sobre dependencias
 
 Assimp no se incluye en el repositorio: hay que instalarlo (vcpkg en
