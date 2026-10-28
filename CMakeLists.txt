@@ -24,7 +24,8 @@ add_executable( ${PROJECT_NAME} ${MY_FILES}
         Camera.h
         Modelo.cpp
         Modelo.h
-        ModoVisualizacion.h)
+        ModoVisualizacion.h
+        Material.h)
 
 #Copia la carpeta de modelos al directorio de ejecución en cada compilación
 add_custom_target(copiar_modelos ALL
