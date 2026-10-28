@@ -59,6 +59,9 @@ namespace PAG {
             // Cada modelo tiene su propia transformación de modelado
             _shaderProgram.setUniform("mModelViewProj",
                                       proyeccionVision * modelo.getMatrizModelado());
+
+            //Y su propio material: envíamos su color difuso para el modo sólido
+            _shaderProgram.setUniform("uColorDifuso", modelo.getMaterial().getDifuso());
             modelo.dibujar();
         }
     }
