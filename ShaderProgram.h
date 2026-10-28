@@ -31,6 +31,7 @@ namespace PAG {
         void crear(const std::string& nombreBase);
         void usar() const;
         void setUniform(const std::string& nombre, const glm::mat4& m) const;
+        void seleccionarSubrutina(const std::string& nombre) const;
     };
 
 }

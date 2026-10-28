@@ -46,9 +46,11 @@ namespace PAG {
             return;
         }
 
-        glPolygonMode(GL_FRONT_AND_BACK, _alambre ? GL_LINE : GL_FILL);
+        glPolygonMode(GL_FRONT_AND_BACK, _modo == ModoVisualizacion::Alambre ? GL_LINE : GL_FILL);
 
         _shaderProgram.usar();
+        _shaderProgram.seleccionarSubrutina(
+            _modo == ModoVisualizacion::Alambre ? "colorAlambre" : "colorSolido");
 
         // Lo común a todos los modelos: proyección y visión de la cámara
         glm::mat4 proyeccionVision = _camera.matrizProyeccion() * _camera.matrizVision();
@@ -96,6 +98,9 @@ namespace PAG {
     void Renderer::creaShaderProgram(const std::string& nombreBase) {
         ShaderProgram nuevo;
         nuevo.crear(nombreBase);            // si falla, lanza excepción y _shaderProgram no se toca
+        nuevo.usar();
+        nuevo.seleccionarSubrutina("colorAlambre");
+        nuevo.seleccionarSubrutina("colorSolido");
         _shaderProgram = std::move(nuevo);  // solo llega aquí si todo ha ido bien
     }
 

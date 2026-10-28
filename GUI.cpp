@@ -199,10 +199,15 @@ namespace PAG {
                 _selectorArchivo.Open();
             }
 
-            //Casilla para ver los modelos en malla de alambre
-            bool alambre = r.getAlambre();
-            if (ImGui::Checkbox("Wireframe", &alambre)) {
-                r.setAlambre(alambre);
+            //Desplegable para elegir modos
+            //Lista que verá el usuario
+            const char* modos[] = {"Wireframe", "Solid"};
+            //Selección actual (convertida a entero)
+            int modoActual = static_cast<int>(r.getModo());
+            //Dibujamos el desplegable
+            if (ImGui::Combo("Display mode", &modoActual, modos, IM_ARRAYSIZE(modos))) {
+                //Cuando cambia de opción, modificamos el modo actual
+                r.setModo(static_cast<ModoVisualizacion>(modoActual));
             }
 
             ImGui::Separator();

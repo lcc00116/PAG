@@ -111,4 +111,14 @@ namespace PAG {
         }
     }
 
+    void ShaderProgram::seleccionarSubrutina(const std::string &nombre) const {
+        //Obtenemos el índice de la subrutina
+        GLuint indice = glGetSubroutineIndex(idSP, GL_FRAGMENT_SHADER, nombre.c_str());
+        //Manejamos el error si la subrutina no existe
+        if (indice == GL_INVALID_INDEX) {
+            throw std::runtime_error("No existe la subrutina: " + nombre);
+        }
+        //Activamos la subrutina (vemos que existe, así que todo bien)
+        glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &indice);
+    }
 }
