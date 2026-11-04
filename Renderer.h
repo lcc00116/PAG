@@ -44,6 +44,8 @@ namespace PAG {
         void trasladarModelo(std::size_t indice, float x, float y, float z);
         void rotarModelo(std::size_t indice, float grados, const glm::vec3& eje);
         void escalarModelo(std::size_t indice, float factor);
+        Material getMaterialModelo(std::size_t indice) const;
+        void setMaterialModelo(std::size_t indice, Material& material);
         std::size_t numModelos() const {return _modelos.size();}
         void moverCamara(MovimientoCamara tipo, float a, float b = 0.0f);
         void arrastrarRaton(float dx, float dy);

@@ -10,7 +10,7 @@ namespace PAG {
     Renderer* Renderer::instancia = nullptr;
 
     namespace {
-        // Devuelve un número aleatorio entre min y max
+        //Devuelve un número aleatorio entre min y max
         float aleatorio(float min, float max) {
             return min + (max - min) * static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
         }
@@ -52,11 +52,11 @@ namespace PAG {
         _shaderProgram.seleccionarSubrutina(
             _modo == ModoVisualizacion::Alambre ? "colorAlambre" : "colorSolido");
 
-        // Lo común a todos los modelos: proyección y visión de la cámara
+        //Lo común a todos los modelos: proyección y visión de la cámara
         glm::mat4 proyeccionVision = _camera.matrizProyeccion() * _camera.matrizVision();
 
         for (const Modelo& modelo : _modelos) {
-            // Cada modelo tiene su propia transformación de modelado
+            //Cada modelo tiene su propia transformación de modelado
             _shaderProgram.setUniform("mModelViewProj",
                                       proyeccionVision * modelo.getMatrizModelado());
 
@@ -199,4 +199,14 @@ namespace PAG {
         modelo.setMatrizModelado(glm::scale(modelo.getMatrizModelado(), glm::vec3(factor)));
     }
 
+    //Devuelve una copia del material del modelo 'indice'
+    Material Renderer::getMaterialModelo(std::size_t indice) const {
+        //'at' lanza out_of_range si el modelo no existe
+        return _modelos.at(indice).getMaterial();
+    }
+
+    //Sustituye el material del modelo 'indice' por el que recibe
+    void Renderer::setMaterialModelo(std::size_t indice, Material& material) {
+        _modelos.at(indice).setMaterial(material);
+    }
 } // PAG
