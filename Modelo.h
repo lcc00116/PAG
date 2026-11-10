@@ -8,6 +8,8 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
+#include "Material.h"
+
 namespace PAG {
 
     class Modelo {
@@ -18,7 +20,7 @@ namespace PAG {
         GLuint idIBO = 0;          // Identificador del IBO (los índices)
         GLsizei numIndices = 0;    // Cuántos índices hay, para saber cuántos dibujar
         glm::mat4 _matrizModelado{1.0f};   // Cómo se coloca en la escena
-
+        Material _material;
 
     public:
         //'colores' puede estar vacío; si no, debe haber un color por cada vértice
@@ -36,7 +38,8 @@ namespace PAG {
         void dibujar() const;
         const glm::mat4& getMatrizModelado() const { return _matrizModelado; }
         void setMatrizModelado(const glm::mat4& m) { _matrizModelado = m; }
-
+        const Material& getMaterial() const { return _material; }
+        void setMaterial(const Material& m) { _material = m; }
     };
 
 }

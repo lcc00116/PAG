@@ -111,4 +111,25 @@ namespace PAG {
         }
     }
 
+    //Envía un vector de 3 componentes al uniform 'nombre'
+    void ShaderProgram::setUniform(const std::string& nombre, const glm::vec3& v) const {
+        //Obtenemos la posición del uniform dentro del shader
+        GLint loc = glGetUniformLocation(idSP, nombre.c_str());
+
+        //Si no existe, no hacemos nada
+        if (loc != -1) {
+            glUniform3fv(loc, 1, &v[0]);
+        }
+    }
+
+    void ShaderProgram::seleccionarSubrutina(const std::string &nombre) const {
+        //Obtenemos el índice de la subrutina
+        GLuint indice = glGetSubroutineIndex(idSP, GL_FRAGMENT_SHADER, nombre.c_str());
+        //Manejamos el error si la subrutina no existe
+        if (indice == GL_INVALID_INDEX) {
+            throw std::runtime_error("No existe la subrutina: " + nombre);
+        }
+        //Activamos la subrutina (vemos que existe, así que todo bien)
+        glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &indice);
+    }
 }

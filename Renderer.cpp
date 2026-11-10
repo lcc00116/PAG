@@ -10,7 +10,7 @@ namespace PAG {
     Renderer* Renderer::instancia = nullptr;
 
     namespace {
-        // Devuelve un número aleatorio entre min y max
+        //Devuelve un número aleatorio entre min y max
         float aleatorio(float min, float max) {
             return min + (max - min) * static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
         }
@@ -46,17 +46,22 @@ namespace PAG {
             return;
         }
 
-        glPolygonMode(GL_FRONT_AND_BACK, _alambre ? GL_LINE : GL_FILL);
+        glPolygonMode(GL_FRONT_AND_BACK, _modo == ModoVisualizacion::Alambre ? GL_LINE : GL_FILL);
 
         _shaderProgram.usar();
+        _shaderProgram.seleccionarSubrutina(
+            _modo == ModoVisualizacion::Alambre ? "colorAlambre" : "colorSolido");
 
-        // Lo común a todos los modelos: proyección y visión de la cámara
+        //Lo común a todos los modelos: proyección y visión de la cámara
         glm::mat4 proyeccionVision = _camera.matrizProyeccion() * _camera.matrizVision();
 
         for (const Modelo& modelo : _modelos) {
-            // Cada modelo tiene su propia transformación de modelado
+            //Cada modelo tiene su propia transformación de modelado
             _shaderProgram.setUniform("mModelViewProj",
                                       proyeccionVision * modelo.getMatrizModelado());
+
+            //Y su propio material: envíamos su color difuso para el modo sólido
+            _shaderProgram.setUniform("uColorDifuso", modelo.getMaterial().getDifuso());
             modelo.dibujar();
         }
     }
@@ -96,6 +101,9 @@ namespace PAG {
     void Renderer::creaShaderProgram(const std::string& nombreBase) {
         ShaderProgram nuevo;
         nuevo.crear(nombreBase);            // si falla, lanza excepción y _shaderProgram no se toca
+        nuevo.usar();
+        nuevo.seleccionarSubrutina("colorAlambre");
+        nuevo.seleccionarSubrutina("colorSolido");
         _shaderProgram = std::move(nuevo);  // solo llega aquí si todo ha ido bien
     }
 
@@ -191,4 +199,14 @@ namespace PAG {
         modelo.setMatrizModelado(glm::scale(modelo.getMatrizModelado(), glm::vec3(factor)));
     }
 
+    //Devuelve una copia del material del modelo 'indice'
+    Material Renderer::getMaterialModelo(std::size_t indice) const {
+        //'at' lanza out_of_range si el modelo no existe
+        return _modelos.at(indice).getMaterial();
+    }
+
+    //Sustituye el material del modelo 'indice' por el que recibe
+    void Renderer::setMaterialModelo(std::size_t indice, Material& material) {
+        _modelos.at(indice).setMaterial(material);
+    }
 } // PAG

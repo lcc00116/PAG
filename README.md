@@ -240,3 +240,66 @@ transformación de modelado, y cargar archivos OBJ con Assimp.
 Assimp no se incluye en el repositorio: hay que instalarlo (vcpkg en
 Windows; `libassimp-dev` o similar en GNU/Linux y MacOS). La cabecera
 `imfilebrowser.h` sí se incluye.
+
+# Práctica 7: Lucía Cano Cubillo
+
+En esta práctica, cada modelo tiene un meterial y la aplicación tiene dos modos de visualización (alambre y sólido), cuyo color se elige en el fragment shader con una subrutina GLSL.
+
+![Diagrama UML](img/pag07.svg)
+
+## Cambios realizados
+
+- **Nueva clase `PAG::Material`:** contiene el color ambiente, difuso y especular; y exponente para calcular los brillos. Cada atributo tiene su propio getter y setter.
+- **Nuevo Enum `ModoVisualizacion`:** (`Alambre` y `Plano`), que sustituye al `bool` usado en `Renderer`.
+- **`PAG::Modelo`:** tiene un `Material` que se puede consultar y cambiar.
+- **`PAG::ShaderProgram`:** nuevo método `SeleccionarSubrutina` y nueva versión de `setUniform` para `vec3`.
+- **`PAG::Renderer`:** guarda el modo de visualización, elige la subrutina y envía al shader el color difuso de cada modelo antes de dibujarlo. Se han añadido nuevos métodos para consultar y cambiar el material de un modelo.
+- **`PAG::GUI`:** desplegable "Display mode" en la ventana de modelos ("Models") y nueva ventana "Material".
+- **Fragment shader:** subrutina `fCalcularColor` con dos implementaciones: `colorAlambre` (rojo) y `colorSolido` (color difuso del material).
+
+## Decisiones de diseño
+
+- **Subrutinas en lugar de condicionales:** el modo se elige desde C++ antes de
+  dibujar, y el shader no tiene ningún `if`.
+- **La subrutina se selecciona en cada frame,** justo después de `usar()`, porque
+  `glUseProgram` borra la selección anterior.
+- **Se comprueba que las subrutinas existen al cargar el shader,** no al dibujar. Si
+  faltan, se lanza una excepción, se conserva el shader anterior y el error aparece
+  en la ventana de mensajes. Así `refrescar` nunca lanza una excepción en cada frame.
+- **El `Renderer` decide el modo:** según él, configura a la vez `glPolygonMode` y la
+  subrutina. La GUI solo le avisa del cambio.
+- **Cada `Modelo` guarda su propio `Material` por valor,** así que se pueden editar
+  de forma independiente. Al ser una clase aparte, compartirlos entre modelos sería
+  fácil de añadir más adelante. El material se incluye en el constructor y en la
+  asignación por movimiento de `Modelo`, para no perderlo al mover o eliminar modelos.
+- **La GUI edita una copia del material** y se la devuelve al `Renderer`, sin tocar
+  nunca el `Modelo`.
+- **Solo se envía al shader el color difuso,** que es lo único que se usa por ahora.
+  El resto del material se guarda, pero se usará cuando haya luces.
+- **En modo plano, el triángulo pierde su degradado** de colores por vértice, porque
+  se usa el color difuso de su material.
+- **Los únicos mensajes por consola** son los de los errores de arranque y el del
+  cierre de la aplicación, porque en esos momentos la GUI no existe.
+
+## Manual de usuario
+
+1. **Shader:** en la ventana "Shader Program", escribe el nombre base de los shaders
+   (por ejemplo `pag03`) y pulsa "Load".
+2. **Modelos:** en la ventana "Models":
+  - "Add triangle" añade un triángulo.
+  - "Load OBJ..." abre el selector de archivos: elige un `.obj` de la carpeta `modelos` y pulsa "ok".
+  - "Display mode" cambia entre alambre ("Wireframe") y sólido ("Solid").
+  - Haz clic en un modelo de la lista para seleccionarlo, y "Delete selected" lo
+    elimina.
+3. **Transformaciones:** con un modelo seleccionado, la ventana "Transform" permite
+   trasladarlo, rotarlo y escalarlo.
+4. **Material:** con un modelo seleccionado, la ventana "Material" permite cambiar
+   sus colores ambiente, difuso y especular y el exponente especular. De momento,
+   solo el color difuso es visible, y solo en modo sólido.
+5. **Cámara:** elige el movimiento en el desplegable de la ventana "Camera" y mueve
+   la cámara con sus botones, con las flechas del teclado o arrastrando con el
+   botón izquierdo del ratón sobre la escena.
+6. **Fondo:** la ventana "Fondo" tiene un selector de color, y la rueda del ratón
+   también cambia el color de fondo.
+7. **Mensajes:** la ventana "Mensajes" muestra los eventos y los errores. La tecla
+   Esc cierra la aplicación.

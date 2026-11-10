@@ -199,10 +199,15 @@ namespace PAG {
                 _selectorArchivo.Open();
             }
 
-            //Casilla para ver los modelos en malla de alambre
-            bool alambre = r.getAlambre();
-            if (ImGui::Checkbox("Wireframe", &alambre)) {
-                r.setAlambre(alambre);
+            //Desplegable para elegir modos
+            //Lista que verá el usuario
+            const char* modos[] = {"Wireframe", "Solid"};
+            //Selección actual (convertida a entero)
+            int modoActual = static_cast<int>(r.getModo());
+            //Dibujamos el desplegable
+            if (ImGui::Combo("Display mode", &modoActual, modos, IM_ARRAYSIZE(modos))) {
+                //Cuando cambia de opción, modificamos el modo actual
+                r.setModo(static_cast<ModoVisualizacion>(modoActual));
             }
 
             ImGui::Separator();
@@ -291,6 +296,58 @@ namespace PAG {
             }
         }
         ImGui::End();
+
+        //---------- Ventana "Material": editar el material del modelo seleccionado ----------
+        ImGui::SetNextWindowPos(ImVec2(440, 10), ImGuiCond_Once);
+
+        if (ImGui::Begin("Material", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+            ImGui::SetWindowFontScale(1.0f);
+            Renderer& r = Renderer::getInstancia();
+
+            //Sólo se puede editar si hay un modelo seleccionado y existe
+            if (_modeloSeleccionado < 0 || _modeloSeleccionado >= static_cast<int>(r.numModelos())) {
+                ImGui::Text("Select a model first");
+            } else {
+                std::size_t i = static_cast<std::size_t>(_modeloSeleccionado);
+                ImGui::Text("Model %d", _modeloSeleccionado + 1);
+
+                //Trabajamos sobre una copia del material y, si cambia algo, se la devolvemos al Renderer
+                Material material = r.getMaterialModelo(i);
+                bool cambiado = false;
+
+                //Cada control devuelve true solo en el frame en que el usuario lo modifica
+                glm::vec3 ambiente = material.getAmbiente();
+                if (ImGui::ColorEdit3("Ambient", &ambiente[0])) {
+                    material.setAmbiente(ambiente);
+                    cambiado = true;
+                }
+
+                glm::vec3 difuso = material.getDifuso();
+                if (ImGui::ColorEdit3("Diffuse", &difuso[0])) {
+                    material.setDifuso(difuso);
+                    cambiado = true;
+                }
+
+                glm::vec3 especular = material.getEspecular();
+                if (ImGui::ColorEdit3("Specular", &especular[0])) {
+                    material.setEspecular(especular);
+                    cambiado = true;
+                }
+
+                float exponente = material.getExponente();
+                if (ImGui::SliderFloat("Shininess", &exponente, 1.0f, 256.0f)) {
+                    material.setExponente(exponente);
+                    cambiado = true;
+                }
+
+                //Sólo avisamos al Renderer si el usuario ha tocado algo
+                if (cambiado) {
+                    r.setMaterialModelo(i, material);
+                }
+            }
+        }
+        ImGui::End();
+
 
         //Renderiza todos los controles dibujados en este frame y los manda a OpenGL
         ImGui::Render();

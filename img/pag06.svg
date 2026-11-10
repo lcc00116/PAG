@@ -21,13 +21,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="0.34965338"
-     inkscape:cx="281.70756"
-     inkscape:cy="358.92689"
+     inkscape:zoom="0.24724228"
+     inkscape:cx="1545.0432"
+     inkscape:cy="208.29771"
      inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg123" />
   <metadata
@@ -685,112 +685,6 @@ text { font-family: Consolas, &quot;DejaVu Sans Mono&quot;, monospace; fill: #11
      class="m"
      id="text80">Zoom</text>
   <rect
-     x="790"
-     y="742"
-     width="330"
-     height="294"
-     fill="#fff"
-     stroke="#222"
-     stroke-width="1.5"
-     id="rect80" />
-  <text
-     x="955.0"
-     y="762"
-     text-anchor="middle"
-     class="title"
-     id="text81">PAG::Camera</text>
-  <line
-     x1="790"
-     y1="772"
-     x2="1120"
-     y2="772"
-     stroke="#222"
-     stroke-width="1.5"
-     id="line81" />
-  <line
-     x1="790"
-     y1="864"
-     x2="1120"
-     y2="864"
-     stroke="#222"
-     stroke-width="1.5"
-     id="line82" />
-  <text
-     x="798"
-     y="790"
-     class="m"
-     id="text82">-posicion: vec3</text>
-  <text
-     x="798"
-     y="806"
-     class="m"
-     id="text83">-puntoMira: vec3</text>
-  <text
-     x="798"
-     y="822"
-     class="m"
-     id="text84">-fovX: float</text>
-  <text
-     x="798"
-     y="838"
-     class="m"
-     id="text85">-zNear, zFar: float</text>
-  <text
-     x="798"
-     y="854"
-     class="m"
-     id="text86">-viewport: ancho, alto</text>
-  <text
-     x="798"
-     y="882"
-     class="m"
-     id="text87">+pan(grados): void</text>
-  <text
-     x="798"
-     y="898"
-     class="m"
-     id="text88">+tilt(grados): void</text>
-  <text
-     x="798"
-     y="914"
-     class="m"
-     id="text89">+dolly(derecha, adelante): void</text>
-  <text
-     x="798"
-     y="930"
-     class="m"
-     id="text90">+crane(unidades): void</text>
-  <text
-     x="798"
-     y="946"
-     class="m"
-     id="text91">+orbit(latitud, longitud): void</text>
-  <text
-     x="798"
-     y="962"
-     class="m"
-     id="text92">+zoom(grados): void</text>
-  <text
-     x="798"
-     y="978"
-     class="m"
-     id="text93">+matrizVision(): mat4</text>
-  <text
-     x="798"
-     y="994"
-     class="m"
-     id="text94">+matrizProyeccion(): mat4</text>
-  <text
-     x="798"
-     y="1010"
-     class="m"
-     id="text95">+setViewport(ancho, alto): void</text>
-  <text
-     x="798"
-     y="1026"
-     class="m"
-     id="text96">+getFovX() / setFovX(grados)</text>
-  <rect
      x="1150"
      y="742"
      width="300"
@@ -1032,4 +926,162 @@ text { font-family: Consolas, &quot;DejaVu Sans Mono&quot;, monospace; fill: #11
      text-anchor="middle"
      class="title"
      id="text123">Assimp</text>
+  <rect
+     x="782.05981"
+     y="751.67566"
+     width="330"
+     height="390"
+     fill="#ffffff"
+     stroke="#222222"
+     stroke-width="1.5"
+     id="rect89" />
+  <text
+     x="947.05981"
+     y="771.67566"
+     text-anchor="middle"
+     class="title"
+     id="text90"
+     style="font-weight:bold;font-size:14px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">PAG::Camera</text>
+  <line
+     x1="782.05981"
+     y1="781.67566"
+     x2="1112.0598"
+     y2="781.67566"
+     stroke="#222222"
+     stroke-width="1.5"
+     id="line90" />
+  <line
+     x1="782.05981"
+     y1="921.67566"
+     x2="1112.0598"
+     y2="921.67566"
+     stroke="#222222"
+     stroke-width="1.5"
+     id="line91" />
+  <text
+     x="790.05981"
+     y="799.67566"
+     class="m"
+     id="text91"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-_posicion: vec3</text>
+  <text
+     x="790.05981"
+     y="815.67566"
+     class="m"
+     id="text92"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-_puntoMira: vec3</text>
+  <text
+     x="790.05981"
+     y="831.67566"
+     class="m"
+     id="text93"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-_arriba: vec3</text>
+  <text
+     x="790.05981"
+     y="847.67566"
+     class="m"
+     id="text94"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-_fovX: float</text>
+  <text
+     x="790.05981"
+     y="863.67566"
+     class="m"
+     id="text95"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-_zNear: float</text>
+  <text
+     x="790.05981"
+     y="879.67566"
+     class="m"
+     id="text96"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-_zFar: float</text>
+  <text
+     x="790.05981"
+     y="895.67566"
+     class="m"
+     id="text97-8"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-_ancho: int</text>
+  <text
+     x="790.05981"
+     y="911.67566"
+     class="m"
+     id="text98-9"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-_alto: int</text>
+  <text
+     x="790.05981"
+     y="939.67566"
+     class="m"
+     id="text99-3"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-direccion(): vec3</text>
+  <text
+     x="790.05981"
+     y="955.67566"
+     class="m"
+     id="text100-4"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-ejeU(): vec3</text>
+  <text
+     x="790.05981"
+     y="971.67566"
+     class="m"
+     id="text101-4"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">-ejeV(): vec3</text>
+  <text
+     x="790.05981"
+     y="987.67566"
+     class="m"
+     id="text102-6"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+matrizVision(): mat4</text>
+  <text
+     x="790.05981"
+     y="1003.6757"
+     class="m"
+     id="text103-0"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+matrizProyeccion(): mat4</text>
+  <text
+     x="790.05981"
+     y="1019.6757"
+     class="m"
+     id="text104-6"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+setViewport(ancho, alto): void</text>
+  <text
+     x="790.05981"
+     y="1035.6757"
+     class="m"
+     id="text105-6"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+getFovX() / setFovX(grados)</text>
+  <text
+     x="790.05981"
+     y="1051.6757"
+     class="m"
+     id="text106-1"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+pan(grados): void</text>
+  <text
+     x="790.05981"
+     y="1067.6757"
+     class="m"
+     id="text107-8"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+tilt(grados): void</text>
+  <text
+     x="790.05981"
+     y="1083.6757"
+     class="m"
+     id="text108-4"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+dolly(derecha, adelante): void</text>
+  <text
+     x="790.05981"
+     y="1099.6757"
+     class="m"
+     id="text109-9"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+crane(arriba): void</text>
+  <text
+     x="790.05981"
+     y="1115.6757"
+     class="m"
+     id="text110-6"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+orbit(latitud, longitud): void</text>
+  <text
+     x="790.05981"
+     y="1131.6757"
+     class="m"
+     id="text111-3"
+     style="font-size:12px;font-family:Consolas, 'DejaVu Sans Mono', monospace;fill:#111111">+zoom(grados): void</text>
 </svg>
