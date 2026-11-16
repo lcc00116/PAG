@@ -113,7 +113,8 @@ namespace PAG {
       idVBOColores(std::exchange(otro.idVBOColores, 0)),
       idIBO(std::exchange(otro.idIBO, 0)),
       numIndices(std::exchange(otro.numIndices, 0)),
-      _matrizModelado(otro._matrizModelado) {}
+      _matrizModelado(otro._matrizModelado),
+      _material(otro._material){}
 
     Modelo& Modelo::operator=(Modelo&& otro) noexcept {
         if (this != &otro) {
@@ -124,6 +125,7 @@ namespace PAG {
             std::swap(idIBO, otro.idIBO);
             std::swap(numIndices, otro.numIndices);
             std::swap(_matrizModelado, otro._matrizModelado);
+            std::swap(_material, otro._material);
         }
         return *this;
     }
